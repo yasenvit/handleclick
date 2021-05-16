@@ -10,6 +10,7 @@ import NoMatch from './components/NoMatch'
 import Header from "./components/Header"
 import FooterBar from "./components/FooterBar"
 import { CssBaseline } from "@material-ui/core"
+import './App.css'
 
 // https://ansonlowzf.com/how-to-build-a-material-ui-navbar/
 
@@ -28,10 +29,15 @@ export default class App extends Component {
 
     return (
       <div className="app">
-        <CssBaseline />
-        <Header />
-        {routes}
-        <FooterBar />
+        <header className="header">
+          {/* <CssBaseline /> */}
+          <Header />
+        </header>
+
+        <main className="main">
+          {routes}
+        </main>
+        <footer className="footer">Footer</footer>
       </div>
     )
   }

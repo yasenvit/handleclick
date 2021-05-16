@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import BuildDiagram from './BuildDiagram';
 import JsonFormField from './JsonFormField';
 import PopUp from "./PopUp";
-import '../fishbone_styling.css'
+// import '../fishbone_styling.css'
 
 export default class GetJsonData extends Component {
     state = {

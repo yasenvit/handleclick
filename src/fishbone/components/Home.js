@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import GetSample from './GetSample'
 import imgUrl from '../images/bg-pattern.jpg';
-import '../fishbone_styling.css'
+// import '../fishbone_styling.css'
 
 
 export default class Home extends Component {
@@ -52,7 +52,7 @@ export default class Home extends Component {
                 </div>
                 {buttons}
                 <div className="home-display">
-                    <GetSample arrowButtonStyle={arrowButtonStyle} />
+                    {/* <GetSample arrowButtonStyle={arrowButtonStyle} /> */}
                 </div>
             </div>
         );

@@ -6,7 +6,7 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import { useArrowDarkButtonStyles } from '@mui-treasury/styles/button/arrowDark';
 import PrintIcon from '@material-ui/icons/Print';
-import '../fishbone_styling.css'
+// import '../fishbone_styling.css'
 
 const ArrowDarkButton = (props) => {
     const { branches, isRightDirection, toggleHandler, printCanvas, getSorted, sorted, arrowButtonStyle } = props;

@@ -12,16 +12,17 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: 'green'
+        // backgroundColor: 'yellow'
     },
     navbarDisplayFlex: {
         boxSizing: 'border-box',
+        // maxWidth: '1920px',
         height: '4vh',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignContent: 'center',
-        backgroundColor: 'yellow'
+        // backgroundColor: 'green'
     },
     navDisplayFlex: {
         boxSizing: 'border-box',
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: 'blue'
+        // backgroundColor: 'purple'
     },
     linkText: {
         boxSizing: 'border-box',
@@ -42,9 +43,17 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignContent: 'center',
         color: 'lightgrey',
-        backgroundColor: 'orange'
     },
     isActive: {
+        boxSizing: 'border-box',
+        textDecoration: 'none',
+        textTransform: 'uppercase',
+        fontWeight: '500',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        color: 'lightgrey',
         color: 'white',
     }
 });
@@ -65,18 +74,20 @@ const Header = (props) => {
         <AppBar position="static" className={classes.mainContainer}>
             <Toolbar>
                 <Container maxWidth="lg" className={classes.navbarDisplayFlex}>
-                    <div className="header-elem">
-                        <NavLink exact activeClassName={classes.isActive} to='/' className={classes.linkText}>
 
-                            Home
-                        </NavLink>
-                    </div>
+                    <NavLink exact activeClassName={classes.isActive} to='/' className={classes.linkText}>
+
+                        <IconButton edge="start" color="inherit" aria-label="home">
+                            <Home fontSize="small" />
+                        </IconButton>
+                    </NavLink>
+
                     <div>
 
                         <List component="nav" aria-labelledby="main navigation" className={classes.navDisplayFlex}>
 
                             {navLinks.map(({ title, path }) => (
-                                <NavLink to={path} className={classes.linkText} activeClassName={classes.isActive}>
+                                <NavLink key={title} to={path} className={classes.linkText} activeClassName={classes.isActive}>
                                     <ListItem button>
                                         <ListItemText primary={title} />
                                     </ListItem></NavLink>

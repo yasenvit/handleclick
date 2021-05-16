@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import JsonSample from './JsonSample';
-import '../fishbone_styling.css'
+// import '../fishbone_styling.css'
 
 
 export default class PopUp extends Component {

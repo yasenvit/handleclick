@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BuildDiagram from './BuildDiagram';
 import Button from '@material-ui/core/Button';
 import ManualFormField from './ManualFormField';
-import '../fishbone_styling.css'
+// import '../fishbone_styling.css'
 
 export default class GetManualData extends Component {
     constructor(props) {

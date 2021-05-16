@@ -1,0 +1,44 @@
+/* .app {
+    display: block;
+    margin-left: auto;
+    margin-right: auto ;
+    max-width: 1920px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  } */
+  html {
+    background-color: rgb(228, 223, 223);
+  }
+
+.app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+
+.header {
+    width: 100%;
+   
+}
+.main {
+    /* background-color: burlywood; */
+    min-width: 1024px;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+.footer {
+    background-color: darkcyan;
+    width: 100%;
+}
+
+  /* .app-routes {
+    width: 100%;
+    min-height: 96vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: aquamarine;
+  } */

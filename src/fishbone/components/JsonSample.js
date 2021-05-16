@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../fishbone_styling.css'
+// import '../fishbone_styling.css'
 
 export default class JsonSample extends Component {
     render() {
