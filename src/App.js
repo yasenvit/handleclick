@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Link,
+  Route, Switch, useLocation
+} from 'react-router-dom'
+import Fishbone from './fishbone/Fishbone'
+import Chart from './chart/Chart'
+import Home from './components/Home'
+import NoMatch from './components/NoMatch'
+import Header from "./components/Header"
+import FooterBar from "./components/FooterBar"
+import { CssBaseline } from "@material-ui/core"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// https://ansonlowzf.com/how-to-build-a-material-ui-navbar/
+
+export default class App extends Component {
+  render() {
+    let routes = (
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/fishbone-diagram' component={Fishbone} />
+        <Route path='/chart' component={Chart} />
+        <Route>
+          <NoMatch />
+        </Route>
+      </Switch>
+    )
+
+    return (
+      <div className="app">
+        <CssBaseline />
+        <Header />
+        {routes}
+        <FooterBar />
+      </div>
+    )
+  }
 }
-
-export default App;
