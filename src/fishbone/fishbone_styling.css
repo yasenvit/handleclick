@@ -12,6 +12,18 @@
   p, ul {
     margin: 0px;
     }
+
+.header-elem {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
   .app {
     
     display: block;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
-  Link,
-  Route, Switch, useLocation
+  Link, Route, Switch, useLocation
 } from 'react-router-dom'
 import Fishbone from './fishbone/Fishbone'
 import Chart from './chart/Chart'

@@ -12,20 +12,28 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         justifyContent: 'center',
         alignContent: 'center',
+        backgroundColor: 'green'
     },
     navbarDisplayFlex: {
         boxSizing: 'border-box',
+        height: '4vh',
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'space-between',
+        alignContent: 'center',
+        backgroundColor: 'yellow'
     },
     navDisplayFlex: {
         boxSizing: 'border-box',
+        height: '4vh',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
+        backgroundColor: 'blue'
     },
     linkText: {
+        boxSizing: 'border-box',
         textDecoration: 'none',
         textTransform: 'uppercase',
         fontWeight: '500',
@@ -34,35 +42,47 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignContent: 'center',
         color: 'lightgrey',
+        backgroundColor: 'orange'
     },
     isActive: {
         color: 'white',
     }
 });
 
+
+
+
 const navLinks = [
     { title: 'fishbone diagram', path: '/fishbone-diagram' },
     { title: 'chart', path: '/chart' }
 ]
+
+
+
 const Header = (props) => {
     const classes = useStyles();
     return (
         <AppBar position="static" className={classes.mainContainer}>
             <Toolbar>
                 <Container maxWidth="lg" className={classes.navbarDisplayFlex}>
-                    <NavLink to='/' className={classes.linkText} activeClassName={classes.isActive}>
-                        <IconButton edge="start" color="inherit" aria-label="home">
-                            <Home fontSize="medium" />
-                        </IconButton></NavLink>
-                    <List component="nav" aria-labelledby="main navigation" className={classes.navDisplayFlex}>
+                    <div className="header-elem">
+                        <NavLink exact activeClassName={classes.isActive} to='/' className={classes.linkText}>
 
-                        {navLinks.map(({ title, path }) => (
-                            <NavLink to={path} className={classes.linkText} activeClassName={classes.isActive}>
-                                <ListItem button>
-                                    <ListItemText primary={title} />
-                                </ListItem></NavLink>
-                        ))}
-                    </List>
+                            Home
+                        </NavLink>
+                    </div>
+                    <div>
+
+                        <List component="nav" aria-labelledby="main navigation" className={classes.navDisplayFlex}>
+
+                            {navLinks.map(({ title, path }) => (
+                                <NavLink to={path} className={classes.linkText} activeClassName={classes.isActive}>
+                                    <ListItem button>
+                                        <ListItemText primary={title} />
+                                    </ListItem></NavLink>
+                            ))}
+                        </List>
+                    </div>
                 </Container>
             </Toolbar>
         </AppBar>
