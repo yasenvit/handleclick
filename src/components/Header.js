@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles({
     mainContainer: {
         boxSizing: 'border-box',
-        height: '4vh',
+        height: '5vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     navbarDisplayFlex: {
         boxSizing: 'border-box',
         // maxWidth: '1920px',
-        height: '4vh',
+        height: '5vh',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     },
     navDisplayFlex: {
         boxSizing: 'border-box',
-        height: '4vh',
+        height: '5vh',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     linkText: {
         boxSizing: 'border-box',
         textDecoration: 'none',
-        textTransform: 'uppercase',
+        textTransform: 'lowercase',
         fontWeight: '500',
         display: 'flex',
         flexDirection: 'row',
@@ -47,8 +47,8 @@ const useStyles = makeStyles({
     isActive: {
         boxSizing: 'border-box',
         textDecoration: 'none',
-        textTransform: 'uppercase',
-        fontWeight: '500',
+        textTransform: 'lowercase',
+        fontWeight: '1000',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
