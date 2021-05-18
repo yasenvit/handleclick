@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import GetJsonData from './components/GetJsonData'
 import GetManualData from './components/GetManualData'
-import Home from './components/Home'
+import AboutFishbone from './components/AboutFishbone'
 import { Route, Link, Switch } from 'react-router-dom'
 import NoMatch from '../components/NoMatch'
+import './FishboneStyling.css'
+
+
 
 export default class Fishbone extends Component {
-
+    preventDefault = (event) => event.preventDefault();
     render() {
+
         // console.log(this.props.match.url)
         let fishboneRoutes = (
             <Switch>
-                <Route exact path={`${this.props.match.url}`} component={Home} />
+                <Route exact path={`${this.props.match.url}`} component={AboutFishbone} />
                 <Route exact path={`${this.props.match.url}/manual`} component={GetManualData} />
                 <Route exact path={`${this.props.match.url}/json`} component={GetJsonData} />
                 <Route>
@@ -21,38 +25,21 @@ export default class Fishbone extends Component {
         )
 
         return (
-            <div>
-                <ul>
-                    <li>
+            <div className='fishbone-container'>
+                <div className="fishbone-container-nav">
+                    <div className='fishbone-container-nav-link'>
+                        <Link to={`${this.props.match.url}`}>About Diagram</Link>
+                    </div>
+                    <div className='fishbone-container-nav-link'>
                         <Link to={`${this.props.match.url}/manual`}>Manual</Link>
-                    </li>
-                    <li>
+                    </div>
+                    <div className='fishbone-container-nav-link'>
                         <Link to={`${this.props.match.url}/json`}>Json</Link>
-                    </li>
-                </ul>
+                    </div>
+                </div>
 
-                {fishboneRoutes}
-            </div>
+                { fishboneRoutes}
+            </div >
         )
     }
 }
-
-// function Fishbone({ match }) {
-//     return (
-//         <div>
-//             <h1>Fishbone</h1>
-//             <ul>
-//                 <li>
-//                     <Link to={`${match.url}/manual`}>Manual</Link>
-//                 </li>
-//                 <li>
-//                     <Link to={`${match.url}/json`}>Json</Link>
-//                 </li>
-//             </ul>
-//             <hr />
-//             <Route path={`${match.path}/manual`} component={Manual} />
-//             <Route path={`${match.path}/json`} component={Json} />
-//         </div>
-//     )
-// }
-// export default Fishbone

@@ -5,7 +5,7 @@ import imgUrl from '../images/bg-pattern.jpg';
 // import '../fishbone_styling.css'
 
 
-export default class Home extends Component {
+export default class AboutFishbone extends Component {
     render() {
         let buttons = (
             <div className="home-buttons">
