@@ -1,18 +1,44 @@
 .fishbone-container {
     box-sizing: border-box;
-    width: 1440px;
-    background-color: coral;
+    width: 100vw;
+    background-color: lightblue;
     overflow: hidden;
-
 }
 
-.fishbone-container-nav {
+.fishbone-nav {
     box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background-color: blanchedalmond;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: #1976d2;
+    height: 4vh;
+}
+.fishbone-nav-elem {
+    box-sizing: border-box;
+    padding: 0em 0.5em 0em 0.5em;
+    border-bottom: 2px;
+    }
+
+.fishbone-nav-elem-active {
+    border-radius: 5px 5px 0px 0px;
+    color: olivedrab;
+    background-color: lightblue;
 }
 
+.fishbone-elem-link {
+    text-decoration: none;
+    text-transform: lowercase;
+    color: white;
+    border: none;
+}
 
+.fishbone-elem-link-active {
+    color: #115293
+}
+
+.fishbone-elem-link-listitem {
+    height: 3.3vh;
+}
