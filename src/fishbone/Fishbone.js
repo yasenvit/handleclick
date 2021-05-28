@@ -9,8 +9,8 @@ import { ListItem, ListItemText } from "@material-ui/core"
 import './FishboneStyling.css'
 
 export default class Fishbone extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.goToManual = this.goToManual.bind(this);
         this.goToJson = this.goToJson.bind(this);
         this.state = {
