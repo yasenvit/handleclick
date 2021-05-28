@@ -9,8 +9,23 @@ import { ListItem, ListItemText } from "@material-ui/core"
 import './FishboneStyling.css'
 
 export default class Fishbone extends Component {
-    state = {
-        isActive: "about"
+    constructor() {
+        super();
+        this.goToManual = this.goToManual.bind(this);
+        this.goToJson = this.goToJson.bind(this);
+        this.state = {
+            isActive: "about"
+        }
+    }
+    goToManual(e) {
+        e.preventDefault();
+        this.makeActive("manual")
+        this.props.history.push(`${this.props.match.url}/manual`);
+    }
+    goToJson(e) {
+        e.preventDefault();
+        this.makeActive("json")
+        this.props.history.push(`${this.props.match.url}/json`);
     }
     makeActive = (val) => {
         this.setState({ isActive: val })
@@ -27,8 +42,7 @@ export default class Fishbone extends Component {
 
         let fishboneRoutes = (
             <Switch>
-                {/* <Route exact path={`${this.props.match.url}`} render={(props) => <AboutFishbone {...props} />} /> */}
-                <Route exact path={`${this.props.match.url}`} component={AboutFishbone} />
+                <Route exact path={`${this.props.match.url}`} render={(props) => <AboutFishbone {...props} goToManual={this.goToManual} goToJson={this.goToJson} />} />
                 <Route exact path={`${this.props.match.url}/manual`} component={GetManualData} />
                 <Route exact path={`${this.props.match.url}/json`} component={GetJsonData} />
                 <Route>

@@ -7,7 +7,7 @@ import '../FishboneStyling.css'
 
 export default class AboutFishbone extends Component {
     render() {
-
+        console.log(this.props.goToManual)
         let buttons = (
             <div className="fishbone-about-buttons">
                 <Button
@@ -15,7 +15,7 @@ export default class AboutFishbone extends Component {
                     variant="text"
                     size="medium"
                     color="primary"
-                    to={`${this.props.match.url}/manual`}
+                    onClick={this.props.goToManual}
                 >
                     Create manually
                 </Button>
@@ -24,7 +24,7 @@ export default class AboutFishbone extends Component {
                     variant="text"
                     size="medium"
                     color="primary"
-                    to={`${this.props.match.url}/json`}
+                    onClick={this.props.goToJson}
                 >
                     JSON Creation
                 </Button>
