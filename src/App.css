@@ -38,6 +38,8 @@
     min-width: 1024px;
     max-width: 1920px;
     margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
 }
 .footer {
     background-color: darkcyan;

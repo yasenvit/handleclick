@@ -1,6 +1,6 @@
 .fishbone-container {
     box-sizing: border-box;
-    width: 100vw;
+    width: 100%;
     background-color: lightblue;
     overflow: hidden;
 }
