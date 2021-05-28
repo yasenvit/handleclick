@@ -24,9 +24,10 @@ export default class Fishbone extends Component {
     }
     preventDefault = (event) => event.preventDefault();
     render() {
-        console.log(this.state.isActive)
+
         let fishboneRoutes = (
             <Switch>
+                {/* <Route exact path={`${this.props.match.url}`} render={(props) => <AboutFishbone {...props} />} /> */}
                 <Route exact path={`${this.props.match.url}`} component={AboutFishbone} />
                 <Route exact path={`${this.props.match.url}/manual`} component={GetManualData} />
                 <Route exact path={`${this.props.match.url}/json`} component={GetJsonData} />

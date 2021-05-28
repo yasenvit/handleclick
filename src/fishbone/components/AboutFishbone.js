@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import GetSample from './GetSample'
 import imgUrl from '../images/bg-pattern.jpg';
-// import '../fishbone_styling.css'
+import '../FishboneStyling.css'
 
 
 export default class AboutFishbone extends Component {
     render() {
+
         let buttons = (
-            <div className="home-buttons">
+            <div className="fishbone-about-buttons">
                 <Button
                     style={formButtonStyle}
                     variant="text"
                     size="medium"
                     color="primary"
-                // onClick={(e) => { this.props.setPage("manual") }}
+                    to={`${this.props.match.url}/manual`}
                 >
                     Create manually
                 </Button>
@@ -23,15 +24,15 @@ export default class AboutFishbone extends Component {
                     variant="text"
                     size="medium"
                     color="primary"
-                // onClick={() => { this.props.setPage("json"); }}
+                    to={`${this.props.match.url}/json`}
                 >
                     JSON Creation
                 </Button>
             </div>
         )
         return (
-            <div className="home">
-                <div className="text">
+            <div className="fishbone-about">
+                <div className="fishbone-about-text">
                     <div>
                         <h3>FISHBONE DIAGRAM</h3>
                     </div>
@@ -51,8 +52,8 @@ export default class AboutFishbone extends Component {
                     <h4>LETS GET STARTED</h4>
                 </div>
                 {buttons}
-                <div className="home-display">
-                    {/* <GetSample arrowButtonStyle={arrowButtonStyle} /> */}
+                <div className="fishbone-about-display">
+                    <GetSample arrowButtonStyle={arrowButtonStyle} />
                 </div>
             </div>
         );

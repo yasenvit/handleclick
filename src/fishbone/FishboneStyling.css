@@ -17,14 +17,17 @@
     height: 4vh;
 }
 .fishbone-nav-elem {
+    width: 10em;
     box-sizing: border-box;
-    padding: 0em 0.5em 0em 0.5em;
+    display: flex;
+    justify-content: center;
+    padding: 0em 0.2em 0em 0.2em;
     border-bottom: 2px;
     }
 
 .fishbone-nav-elem-active {
     border-radius: 5px 5px 0px 0px;
-    color: olivedrab;
+    /* color: olivedrab; */
     background-color: lightblue;
 }
 
@@ -42,3 +45,64 @@
 .fishbone-elem-link-listitem {
     height: 3.3vh;
 }
+.fishbone-about {
+    box-sizing: border-box;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+}
+.fishbone-about-text{
+    /* background-color: blanchedalmond; */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+.fishbone-about-buttons {
+    margin-bottom: 0.5em;
+}
+
+.fishbone-about-display {
+    /* background-color: whitesmoke; */
+    width: 100%;
+}
+
+.build {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr minmax(5em,8%);
+    width: 100%;
+    background-color: darkseagreen;;
+}
+.build-display {
+    padding: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: darkkhaki; */
+  }
+  .build-buttons {
+    padding: 5px;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .buttons-mui {
+    height: 40%;
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* font-size: 5px; */
+  }
+
+  .canvas {
+    background-color: white;
+    border: 0.5px solid #333333
+    }
