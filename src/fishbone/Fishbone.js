@@ -52,7 +52,7 @@ export default class Fishbone extends Component {
         )
 
         return (
-            <div className='fishbone-container'>
+            <div className='fishbone'>
                 <div className="fishbone-nav">
                     <div className={this.classList({
                         'fishbone-nav-elem': true,
@@ -97,7 +97,10 @@ export default class Fishbone extends Component {
                         </NavLink>
                     </div>
                 </div>
-                {fishboneRoutes}
+                <div className='fishbone-container'>
+                    {fishboneRoutes}
+                </div>
+
             </div >
         )
     }

@@ -68,7 +68,7 @@ const Header = (props) => {
     return (
         <AppBar position="static" className={classes.mainContainer}>
             <Toolbar>
-                <Container maxWidth="lg" className={classes.navbarDisplayFlex}>
+                <Container maxWidth="md" className={classes.navbarDisplayFlex}>
                     <NavLink exact to='/' style={{ color: 'lightgrey' }} activeStyle={{ color: 'white' }}>
                         <IconButton edge="start" color="inherit" aria-label="home">
                             <Home fontSize="small" />

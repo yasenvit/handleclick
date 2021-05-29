@@ -201,6 +201,7 @@ export default class BuildDiagram extends Component {
 
         return (
             <div className="build">
+
                 <div className="build-display">
                     <DisplayDiagram diagram={displayDiagram} />
                 </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BuildDiagram from './BuildDiagram';
 import Button from '@material-ui/core/Button';
 import ManualFormField from './ManualFormField';
-// import '../fishbone_styling.css'
+import '../FishboneStyling.css'
 
 export default class GetManualData extends Component {
     constructor(props) {
@@ -199,18 +199,18 @@ export default class GetManualData extends Component {
         />);
 
         return (
-            <div className="create">
-                <div className="create-form">
-                    <div className="create-form-objects" onChange={this.handleChange(inputFor)}>
+            <div className="fishbone-create">
+                {/* <div className="fishbone-create-form">
+                    <div className="fishbone-create-form-objects" onChange={this.handleChange(inputFor)}>
                         {backButton}
                         {manualCreationButton}
                         {formField}
                     </div>
                 </div>
 
-                <div className="create-container">
+                <div className="fishbone-create-container">
                     {buildCanvas}
-                </div>
+                </div> */}
             </div>
         );
     };

@@ -33,29 +33,30 @@ export default class AboutFishbone extends Component {
         return (
             <div className="fishbone-about">
                 <div className="fishbone-about-text">
-                    <div>
-                        <h3>FISHBONE DIAGRAM</h3>
-                    </div>
-                    <div className="text-box">
-                        Also called: cause-and-effect diagram, Ishikawa diagram.<br></br>
-                        This cause analysis tool is considered one of the seven basic quality tools.
-                        The fishbone diagram identifies many possible causes for an effect or problem.
+                    <h3>FISHBONE DIAGRAM</h3>
+                    <p>Also called: cause-and-effect diagram, Ishikawa diagram.</p>
+                    <div className="fishbone-about-text-box">
+                        <p> This cause analysis tool is considered one of the
+                        seven basic quality tools.
+                        The fishbone diagram identifies
+                        many possible causes for an effect or problem.
                         It can be used to structure a brainstorming session.
-                        It immediately sorts ideas into useful categories.
+                        It immediately sorts ideas into useful categories.</p>
                     </div>
+
                     <h4>WHEN TO USE A FISHBONE DIAGRAM</h4>
 
                     <ul>
-                        <li>When identifying possible causes for a problem</li>
-                        <li>When a team’s thinking tends to fall into ruts</li>
+                        <li>When identifying possible causes for a problem;</li>
+                        <li>When a team’s thinking tends to fall into ruts.</li>
                     </ul>
                     <h4>LETS GET STARTED</h4>
                 </div>
-                {buttons}
+                { buttons}
                 <div className="fishbone-about-display">
                     <GetSample arrowButtonStyle={arrowButtonStyle} />
                 </div>
-            </div>
+            </div >
         );
     };
 };
