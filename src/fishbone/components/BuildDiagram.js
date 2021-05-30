@@ -4,7 +4,7 @@ import Axis from './utils/Axis';
 import ArrowButton from './ArrowButton';
 import GetOptimalFontSize from './utils/GetOptimalFontSize';
 import FontSlider from './FontSlider';
-// import '../fishbone_styling.css'
+import '../FishboneStyling.css'
 
 const preferableCanvasHeight = window.screen.height * 0.8;
 const preferableCanvasWidth = Math.round(preferableCanvasHeight * 1.4142);

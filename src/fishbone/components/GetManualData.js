@@ -201,18 +201,18 @@ export default class GetManualData extends Component {
         />);
 
         return (
-            <div className="fishbone-create">
-                {/* <div className="fishbone-create-form">
-                    <div className="fishbone-create-form-objects" onChange={this.handleChange(inputFor)}>
+            <div className="fishbone-manual-create">
+                <div className="fishbone-manual-create-form">
+                    <div className="fishbone-manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
                         {backButton}
                         {manualCreationButton}
                         {formField}
                     </div>
                 </div>
 
-                <div className="fishbone-create-container">
+                <div className="fishbone-manual-create-container">
                     {buildCanvas}
-                </div> */}
+                </div>
             </div>
         );
     };

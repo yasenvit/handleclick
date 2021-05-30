@@ -18,7 +18,6 @@ h3,h4, h5, h6 {
     background-color: lightblue;
     overflow: hidden;
 }
-
 .fishbone-nav {
     box-sizing: border-box;
     width: 100%;
@@ -37,23 +36,19 @@ h3,h4, h5, h6 {
     padding: 0em 0.2em 0em 0.2em;
     border-bottom: 2px;
     }
-
 .fishbone-nav-elem-active {
     border-radius: 5px 5px 0px 0px;
     background-color: lightblue;
 }
-
 .fishbone-elem-link {
     text-decoration: none;
     text-transform: lowercase;
     color: white;
     border: none;
 }
-
 .fishbone-elem-link-active {
     color: #115293
 }
-
 .fishbone-elem-link-listitem {
     height: 3.3vh;
 }
@@ -71,7 +66,7 @@ h3,h4, h5, h6 {
     padding: 1em;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     /* background-color: chartreuse; */
 }
@@ -94,34 +89,30 @@ h3,h4, h5, h6 {
 .fishbone-about-buttons {
     margin-bottom: 0.5em;
 }
-
 .fishbone-about-display {
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding-right: 8em;
     /* background-color: whitesmoke; */
 }
-
 .build {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns:1fr minmax(6em,10%);
+    grid-template-columns:1fr minmax(8em,16%);
     width: 100%;
     /* background-color: darkseagreen;; */
 }
 .build-display {
-    padding: 0.5em 0em;
+    padding: 0.5em 1em;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
     /* background-color: darkkhaki; */
   }
   .build-buttons {
-    padding: 5px;
-    padding-top: 50px;
+    padding: 0.5em;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -130,26 +121,52 @@ h3,h4, h5, h6 {
   }
   .buttons-mui {
     height: 40%;
-    margin-bottom: 2em;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    /* background-color: cyan; */
   }
-
   .canvas {
     background-color: white;
     border: 0.5px solid #333333
     }
-
-.fishbone-create {
+.fishbone-manual-create {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 1em;
+    padding: 0.5em;
     display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
     /* background-color: yellow; */
 }   
+.fishbone-manual-create-form{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex:1;
+    padding: 0.5em 1em;
+    /* background-color: bisque; */
+}
+.fishbone-manual-create-container {
+    box-sizing: border-box;
+    display: flex;
+    flex: 4.5;
+    /* background-color: green */
+}
+.fishbone-manual-create-form-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* background-color: cadetblue; */
+}
+.site {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
