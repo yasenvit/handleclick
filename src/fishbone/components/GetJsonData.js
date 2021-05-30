@@ -135,7 +135,9 @@ export default class GetJsonData extends Component {
             this.settingData(this.state.currentValue);
         };
     };
-
+    componentDidMount() {
+        this.props.getActive("json")
+    }
     render() {
         const { currentValue, goal, title, branches, errorMessage, warningMessage, isSampleOpened } = this.state;
         let formField, displayDiagram;

@@ -17,6 +17,9 @@ export default class Fishbone extends Component {
             isActive: "about"
         }
     }
+    getActive = (page) => {
+        this.setState({ isActive: page })
+    }
     goToManual(e) {
         e.preventDefault();
         this.makeActive("manual")
@@ -39,12 +42,12 @@ export default class Fishbone extends Component {
     }
     preventDefault = (event) => event.preventDefault();
     render() {
-
+        console.log(this.props.match.url)
         let fishboneRoutes = (
             <Switch>
-                <Route exact path={`${this.props.match.url}`} render={(props) => <AboutFishbone {...props} goToManual={this.goToManual} goToJson={this.goToJson} />} />
-                <Route exact path={`${this.props.match.url}/manual`} component={GetManualData} />
-                <Route exact path={`${this.props.match.url}/json`} component={GetJsonData} />
+                <Route exact path={`${this.props.match.url}`} render={(props) => <AboutFishbone {...props} goToManual={this.goToManual} goToJson={this.goToJson} getActive={this.getActive} />} />
+                <Route exact path={`${this.props.match.url}/manual`} render={(props) => <GetManualData {...props} getActive={this.getActive} />} />
+                <Route exact path={`${this.props.match.url}/json`} render={(props) => <GetJsonData {...props} getActive={this.getActive} />} />
                 <Route>
                     <NoMatch />
                 </Route>

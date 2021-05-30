@@ -6,8 +6,10 @@ import '../FishboneStyling.css'
 
 
 export default class AboutFishbone extends Component {
+    componentDidMount() {
+        this.props.getActive("about")
+    }
     render() {
-        console.log(this.props.goToManual)
         let buttons = (
             <div className="fishbone-about-buttons">
                 <Button

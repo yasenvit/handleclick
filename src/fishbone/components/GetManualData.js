@@ -143,7 +143,9 @@ export default class GetManualData extends Component {
             });
         };
     };
-
+    componentDidMount() {
+        this.props.getActive("manual")
+    }
     render() {
         const { title, goal, branches, currentValue, inputFor,
             isCreating, branchName, previousValue } = this.state;
