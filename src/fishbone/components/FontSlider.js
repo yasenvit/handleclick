@@ -11,7 +11,7 @@ const styles = theme => ({
         fontFamily: "Computer Modern Typewriter",
     },
     margin: {
-        height: theme.spacing(3),
+        // height: theme.spacing(3),
     },
 });
 
@@ -79,7 +79,7 @@ class FontSlider extends Component {
                     max={15}
                     step={0.5}
                 />
-                <Typography gutterBottom>Font size</Typography>
+                {/* <Typography gutterBottom>Font size</Typography> */}
             </div>
         )
     }

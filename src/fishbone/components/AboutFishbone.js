@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import GetSample from './GetSample'
-import imgUrl from '../images/bg-pattern.jpg';
 import '../FishboneStyling.css'
 
 
@@ -9,9 +8,11 @@ export default class AboutFishbone extends Component {
     componentDidMount() {
         this.props.getActive("about")
     }
+
+
     render() {
         let buttons = (
-            <div className="fishbone-about-buttons">
+            <div className="about-buttons">
                 <Button
                     style={formButtonStyle}
                     variant="text"
@@ -33,11 +34,11 @@ export default class AboutFishbone extends Component {
             </div>
         )
         return (
-            <div className="fishbone-about">
-                <div className="fishbone-about-text">
+            <div className="about">
+                <div className="about-text">
                     <h3>FISHBONE DIAGRAM</h3>
                     <p>Also called: cause-and-effect diagram, Ishikawa diagram.</p>
-                    <div className="fishbone-about-text-box">
+                    <div className="about-text-box">
                         <p> This cause analysis tool is considered one of the
                         seven basic quality tools.
                         The fishbone diagram identifies
@@ -55,7 +56,7 @@ export default class AboutFishbone extends Component {
                     <h4>LETS GET STARTED</h4>
                 </div>
                 { buttons}
-                <div className="fishbone-about-display">
+                <div id="display" className="about-display">
                     <GetSample arrowButtonStyle={arrowButtonStyle} />
                 </div>
             </div >
@@ -82,5 +83,6 @@ const arrowButtonStyle = {
     fontSize: "10px",
     backgroundColor: '#5b6692',
     color: 'whitesmoke',
-    border: "none"
+    border: "none",
+    marginRight: "0.5em",
 };

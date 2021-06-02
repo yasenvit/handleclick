@@ -10,8 +10,12 @@ h3,h4, h5, h6 {
     font-family: Computer Modern Typewriter;
     font-size: 18px;
     }
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+   }
 .fishbone {    
-    box-sizing: border-box;
     width: 100%;
     display: grid;
     grid-template-rows: 4vh 1fr;
@@ -19,7 +23,6 @@ h3,h4, h5, h6 {
     overflow: hidden;
 }
 .fishbone-nav {
-    box-sizing: border-box;
     width: 100%;
     margin: 0 auto;
     display: flex;
@@ -30,7 +33,6 @@ h3,h4, h5, h6 {
 }
 .fishbone-nav-elem {
     width: 10em;
-    box-sizing: border-box;
     display: flex;
     justify-content: center;
     padding: 0em 0.2em 0em 0.2em;
@@ -53,14 +55,12 @@ h3,h4, h5, h6 {
     height: 3.3vh;
 }
 .fishbone-container {
-    box-sizing: border-box;
     display: flex;
     align-items: stretch;
     width: 100%;
     height: 100%;
 }
-.fishbone-about {
-    box-sizing: border-box;
+.about {
     width: 100%;
     height: 100%;
     padding: 1em;
@@ -70,8 +70,7 @@ h3,h4, h5, h6 {
     align-items: center;
     /* background-color: chartreuse; */
 }
-.fishbone-about-text{
-    box-sizing: border-box;
+.about-text{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,17 +79,15 @@ h3,h4, h5, h6 {
     color: #333333;
     /* background-color: blanchedalmond */
 }
-.fishbone-about-text-box {
-    box-sizing: border-box;
+.about-text-box {
     inline-size: 60em;
     overflow-wrap: break-word;
     /* background-color: darkcyan; */
 }
-.fishbone-about-buttons {
+.about-buttons {
     margin-bottom: 0.5em;
 }
-.fishbone-about-display {
-    box-sizing: border-box;
+.about-display {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,41 +95,62 @@ h3,h4, h5, h6 {
     /* background-color: whitesmoke; */
 }
 .build {
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns:1fr minmax(8em,16%);
-    width: 100%;
-    /* background-color: darkseagreen;; */
-}
-.build-display {
-    padding: 0.5em 1em;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    /* background-color: darkkhaki; */
-  }
-  .build-buttons {
-    padding: 0.5em;
-    display: flex;
+     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    /* background-color: darkgrey; */
-  }
-  .buttons-mui {
-    height: 40%;
+    width: 100%;
+    background-color: darkseagreen;;
+}
+.build-header {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: darkolivegreen;
+    padding:0.5em;
+}
+.build-imported-buttons {
+    flex: 2.4;
+    background-color: deeppink;
+}
+
+  .build-buttons {
+    flex:1;
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
+    background-color: darkgrey;
+  }
+  .buttons-mui {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
     /* background-color: cyan; */
+  }
+  .build-slider {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+      /* background-color: goldenrod; */
+  }
+
+  .build-display {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    /* background-color: darkkhaki; */
   }
   .canvas {
     background-color: white;
     border: 0.5px solid #333333
     }
 .fishbone-manual-create {
-    box-sizing: border-box;
     width: 100%;
     height: 100%;
     padding: 0.5em;
@@ -140,33 +158,44 @@ h3,h4, h5, h6 {
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    /* background-color: yellow; */
+    background-color: yellow;
 }   
 .fishbone-manual-create-form{
-    box-sizing: border-box;
-    display: flex;
+     display: flex;
     justify-content: center;
     flex:1;
     padding: 0.5em 1em;
-    /* background-color: bisque; */
+    background-color: bisque;
+    
 }
 .fishbone-manual-create-container {
-    box-sizing: border-box;
-    display: flex;
+     display: flex;
     flex: 4.5;
-    /* background-color: green */
+    background-color: green
 }
 .fishbone-manual-create-form-buttons{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    /* background-color: cadetblue; */
+    background-color: cadetblue;
 }
 .site {
-    margin-bottom: 5px;
+     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
   }
+.json {
+     background-color: aquamarine;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(10vw,25%) 1fr;    
+}
+.json-form {
+     background-color: burlywood;
+}
+.json-container {
+     background-color: cornsilk;
+}

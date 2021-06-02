@@ -155,7 +155,7 @@ export default class GetJsonData extends Component {
         };
         return (
             <div className="json">
-                <div className="json-form" onChange={this.handleChange()}>
+                {/* <div className="json-form" onChange={this.handleChange()}>
                     <div>
                         <Button variant="contained" style={jsonFormatButtonStyle} color="primary" onClick={() => { this.getFormatSample() }}>
                             {isSampleOpened ? 'hide JSON format' : 'see JSON format'}
@@ -173,7 +173,7 @@ export default class GetJsonData extends Component {
                         {warningMessage}
                     </div>
                     {displayDiagram}
-                </div>
+                </div> */}
             </div>
         );
     };

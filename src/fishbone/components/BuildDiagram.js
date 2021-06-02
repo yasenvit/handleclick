@@ -6,8 +6,6 @@ import GetOptimalFontSize from './utils/GetOptimalFontSize';
 import FontSlider from './FontSlider';
 import '../FishboneStyling.css'
 
-const preferableCanvasHeight = window.screen.height * 0.8;
-const preferableCanvasWidth = Math.round(preferableCanvasHeight * 1.4142);
 
 export default class BuildDiagram extends Component {
     state = {
@@ -18,8 +16,6 @@ export default class BuildDiagram extends Component {
         branches: [],
         originBranches: [],
         sorted: "unsorted",
-        canvasWidth: preferableCanvasWidth,
-        canvasHeight: preferableCanvasHeight,
         axisIdx: 0.75,
         rightAngle: 60,
         leftAngle: 120,
@@ -34,6 +30,16 @@ export default class BuildDiagram extends Component {
         branchFontSize: "",
         goalFontSize: "",
     };
+    getDisplaySize = () => {
+        var elmnt = document.getElementById("display");
+        var canvas_width = elmnt.offsetWidth * 0.95
+        var canvas_height = Math.round(canvas_width / 1.4142)
+        this.setState({
+            canvasWidth: canvas_width,
+            canvasHeight: canvas_height
+        })
+        return { "canvasWidth": canvas_width, "canvasHeight": canvas_height }
+    }
 
     printCanvas = () => {
         const dataUrl = document.getElementById('myCanvas').toDataURL();
@@ -56,10 +62,13 @@ export default class BuildDiagram extends Component {
     };
 
     getCredential = () => {
-        const { rightAngle, leftAngle, canvasWidth, canvasHeight, axisIdx, isRightDirection } = this.state;
+        const { rightAngle, leftAngle, axisIdx, isRightDirection } = this.state;
         let canvas = document.getElementById("myCanvas");
         let angleDegree = this.state.isRightDirection ? rightAngle : leftAngle;
         let angleRadian = this.getRadianFromDegree(angleDegree);
+        let canvas_dimensions = this.getDisplaySize()
+        let { canvasWidth, canvasHeight } = canvas_dimensions
+        console.log(canvasWidth)
         let axisHeightPosition = Math.round(canvasHeight / 2) + 0.5;
         let axisLength = Math.round(canvasWidth * axisIdx) - 50;
         let leftEdge = isRightDirection ? Math.round((canvasWidth - axisLength) / 2)
@@ -94,7 +103,9 @@ export default class BuildDiagram extends Component {
     };
 
     componentDidMount() {
+        this.getDisplaySize();
         this.getCredential();
+
     };
 
     getSorted = (dir, arr) => {
@@ -201,26 +212,34 @@ export default class BuildDiagram extends Component {
 
         return (
             <div className="build">
+                <div className="build-header">
+                    <div className="build-imported-buttons">
+                        import buttons will be here
+                    </div>
+                    <div className="build-buttons">
+                        <ArrowButton
+                            toggleHandler={this.toggleHandler}
+                            isRightDirection={isRightDirection}
+                            printCanvas={this.printCanvas}
+                            getSorted={this.getSorted}
+                            branches={branches}
+                            sorted={sorted}
+                            arrowButtonStyle={this.props.arrowButtonStyle}
 
-                <div className="build-display">
+                        />
+                        <div className="build-slider">
+                            <FontSlider
+                                childOptimalFontSize={this.state.childOptimalFontSize}
+                                getFontSize={this.getFontSize}
+                            />
+                        </div>
+
+                    </div>
+                </div>
+                <div className="build-display" id="display">
                     <DisplayDiagram diagram={displayDiagram} />
                 </div>
-                <div className="build-buttons">
-                    <ArrowButton
-                        toggleHandler={this.toggleHandler}
-                        isRightDirection={isRightDirection}
-                        printCanvas={this.printCanvas}
-                        getSorted={this.getSorted}
-                        branches={branches}
-                        sorted={sorted}
-                        arrowButtonStyle={this.props.arrowButtonStyle}
 
-                    />
-                    <FontSlider
-                        childOptimalFontSize={this.state.childOptimalFontSize}
-                        getFontSize={this.getFontSize}
-                    />
-                </div>
             </div>
         );
     };

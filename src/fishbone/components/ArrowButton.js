@@ -10,12 +10,7 @@ import '../FishboneStyling.css'
 
 const ArrowDarkButton = (props) => {
     const { branches, isRightDirection, toggleHandler, printCanvas, getSorted, sorted, arrowButtonStyle } = props;
-    const classes = useArrowDarkButtonStyles({
-        root: {
-            backgroundColor: '#BDCDEF'
-        }
-    }
-    );
+    const classes = useArrowDarkButtonStyles();
 
     let sortingSymbol = sorted === "unsorted" ? "descend" : sorted === "descend" ? "ascend" : "unsorted";
     return (
