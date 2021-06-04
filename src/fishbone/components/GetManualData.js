@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BuildDiagram from './BuildDiagram';
 import Button from '@material-ui/core/Button';
 import ManualFormField from './ManualFormField';
 import '../FishboneStyling.css'
@@ -11,7 +10,6 @@ export default class GetManualData extends Component {
             inputFor: "",
             currentValue: "",
             previousValue: "",
-            isCreating: false,
             branches: []
         };
         this.keyPress = this.keyPress.bind(this);
@@ -36,7 +34,7 @@ export default class GetManualData extends Component {
             title: "",
             goal: "",
             branches: [],
-            isCreating: true,
+
             inputFor: "Enter Goal"
         }));
     };
@@ -54,6 +52,7 @@ export default class GetManualData extends Component {
             alert("Empty input isn't allowed")
         } else {
             if (name === "Enter Goal") {
+                this.props.getData({ "goal": currentValue })
                 this.setState({
                     goal: currentValue,
                     currentValue: "",
@@ -96,7 +95,7 @@ export default class GetManualData extends Component {
                 inputFor: "",
                 currentValue: "",
                 previousValue: "",
-                isCreating: false,
+
             })
         } else if ((inputFor === "Enter Branch" && branches.length > 0) || inputFor === "Title (optional)") {
             this.setState({ inputFor: "Enter Element" })
@@ -143,12 +142,22 @@ export default class GetManualData extends Component {
             });
         };
     };
-    componentDidMount() {
-        this.props.getActive("manual")
+    componentDidUpdate(prevProps, prevState) {
+        const { branches, goal, title, previousValue } = this.state;
+        if (goal !== prevState.goal || title !== prevState.title
+            || branches !== prevState.branches || previousValue !== prevState.previousValue
+        ) {
+            this.props.getData({
+                branches: branches,
+                goal: goal,
+                title: title,
+                previousValue: previousValue
+            })
+        }
     }
     render() {
         const { title, goal, branches, currentValue, inputFor,
-            isCreating, branchName, previousValue } = this.state;
+            branchName, previousValue } = this.state;
         let manualCreationButton, formField, buildCanvas, backButton;
         if (!inputFor) {
             manualCreationButton = (
@@ -165,15 +174,7 @@ export default class GetManualData extends Component {
             );
         };
 
-        buildCanvas = <BuildDiagram
-            title={title}
-            goal={goal}
-            branches={branches}
-            previousValue={previousValue}
-            arrowButtonStyle={arrowButtonStyle}
-        />
-
-        if (isCreating && inputFor) {
+        if (inputFor) {
             backButton = (
                 <div className="site">
                     <Button
@@ -189,31 +190,27 @@ export default class GetManualData extends Component {
         };
         formField = (<ManualFormField
             goal={goal} branches={branches}
+            previousValue={previousValue}
             currentValue={currentValue}
             inputFor={inputFor}
             title={title}
             getInput={this.getInput}
             completeElement={this.completeElement}
-            isCreating={isCreating}
+
             addTitle={this.addTitle}
             branchName={branchName}
             keyPress={this.keyPress}
+            getData={this.props.getData}
         />);
 
         return (
-            <div className="fishbone-manual-create">
-                <div className="fishbone-manual-create-form">
-                    <div className="fishbone-manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
-                        {backButton}
-                        {manualCreationButton}
-                        {formField}
-                    </div>
-                </div>
 
-                <div className="fishbone-manual-create-container">
-                    {buildCanvas}
-                </div>
+            <div className="fishbone-manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
+                {backButton}
+                {manualCreationButton}
+                {formField}
             </div>
+
         );
     };
 };

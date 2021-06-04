@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import '../fishbone_styling.css'
 
 export default class ManualFormField extends Component {
     constructor(props) {
@@ -11,11 +10,11 @@ export default class ManualFormField extends Component {
 
     render() {
         const { title, branches, currentValue, getInput, completeElement,
-            inputFor, isCreating, addTitle, branchName, keyPress } = this.props;
+            inputFor, addTitle, branchName, keyPress } = this.props;
         let completeElementButton, inputField, submitButton, completeButton;
         let addToText = inputFor === "Enter Element" ? "add to" : "";
 
-        if (isCreating && !title && inputFor) {
+        if (!title && inputFor) {
             inputField = (
                 <div className="site" >
                     <TextField
@@ -52,7 +51,7 @@ export default class ManualFormField extends Component {
                 </div >)
         }
 
-        if (isCreating && branches && branches.length > 0 && inputFor === "Enter Element") {
+        if (branches && branches.length > 0 && inputFor === "Enter Element") {
             completeElementButton = (
                 <div className="site">
                     <Button

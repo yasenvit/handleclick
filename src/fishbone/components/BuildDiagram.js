@@ -4,7 +4,8 @@ import Axis from './utils/Axis';
 import ArrowButton from './ArrowButton';
 import GetOptimalFontSize from './utils/GetOptimalFontSize';
 import FontSlider from './FontSlider';
-import '../FishboneStyling.css'
+import '../FishboneStyling.css';
+import GetManualData from './GetManualData.js'
 
 
 export default class BuildDiagram extends Component {
@@ -105,7 +106,6 @@ export default class BuildDiagram extends Component {
     componentDidMount() {
         this.getDisplaySize();
         this.getCredential();
-
     };
 
     getSorted = (dir, arr) => {
@@ -134,29 +134,34 @@ export default class BuildDiagram extends Component {
     };
 
     getOriginBranches = (data) => {
-        this.setState({
-            originBranches: data.map(object => {
-                let newObj = {};
-                newObj["name"] = object.name;
-                newObj["elements"] = object.elements;
-                return newObj;
-            })
-        });
+        if (data) {
+            this.setState({
+                originBranches: data.map(object => {
+                    let newObj = {};
+                    newObj["name"] = object.name;
+                    newObj["elements"] = object.elements;
+                    return newObj;
+                })
+            });
+        }
     };
 
     settingData(obj) {
-        this.setState({
-            goal: obj.goal,
-            branches: obj.branches.map(object => {
-                let newObj = {};
-                newObj["name"] = object.name;
-                newObj["elements"] = object.elements;
-                return newObj;
-            }),
-            title: obj.title,
-            currentValue: obj.currentValue,
-            previousValue: obj.previousValue,
-        });
+        console.log(obj)
+        if (obj.branches) {
+            this.setState({
+                goal: obj.goal,
+                branches: obj.branches.map(object => {
+                    let newObj = {};
+                    newObj["name"] = object.name;
+                    newObj["elements"] = object.elements;
+                    return newObj;
+                }),
+                title: obj.title,
+                currentValue: obj.currentValue,
+                previousValue: obj.previousValue,
+            });
+        }
     };
 
     getRadianFromDegree(deg) {
@@ -167,6 +172,7 @@ export default class BuildDiagram extends Component {
     getOptimalFontSize = (arr) => {
         if (arr) {
             const { goalFontSize, branchFontSize, childFontSize } = GetOptimalFontSize(arr);
+            console.log(goalFontSize, branchFontSize, childFontSize)
             this.setState({
                 goalFontSize: goalFontSize,
                 goalOptimalFontSize: goalFontSize,
@@ -179,15 +185,13 @@ export default class BuildDiagram extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        const { branches, goal, title, previousValue } = this.props;
-        if (goal !== prevProps.goal ||
+        const { branches, goal, title, previousValue } = this.state;
+        if (goal !== prevState.goal ||
             title !== prevState.title ||
-            branches !== prevProps.branches ||
-            previousValue !== prevProps.previousValue
+            branches !== prevState.branches ||
+            previousValue !== prevState.previousValue
         ) {
-            this.getOriginBranches(this.props.branches)
-            this.settingData(this.props)
-            this.getOptimalFontSize(this.props.branches)
+            this.getOptimalFontSize(this.state.branches)
         };
         if (this.state.branches !== prevState.branches ||
             this.state.goal !== prevState.goal ||
@@ -201,11 +205,24 @@ export default class BuildDiagram extends Component {
             Axis(this.state)
         };
     };
-
+    getData = (obj) => {
+        this.setState({
+            goal: obj.goal,
+            title: obj.title,
+            branches: obj.branches,
+            previousValue: obj.previousValue
+        })
+    }
     render() {
+        console.log(this.state.goal)
         const { canvasWidth, canvasHeight, isRightDirection, branches, sorted } = this.state;
         let displayDiagram;
-
+        let buttonsCluster = (<div></div>)
+        if (this.props.page && this.props.page === "manual") {
+            buttonsCluster = (
+                <GetManualData getData={this.getData} />
+            )
+        }
         displayDiagram = (
             <canvas className="canvas" id="myCanvas" width={canvasWidth} height={canvasHeight}></canvas>
         );
@@ -214,7 +231,7 @@ export default class BuildDiagram extends Component {
             <div className="build">
                 <div className="build-header">
                     <div className="build-imported-buttons">
-                        import buttons will be here
+                        {buttonsCluster}
                     </div>
                     <div className="build-buttons">
                         <ArrowButton
@@ -225,7 +242,6 @@ export default class BuildDiagram extends Component {
                             branches={branches}
                             sorted={sorted}
                             arrowButtonStyle={this.props.arrowButtonStyle}
-
                         />
                         <div className="build-slider">
                             <FontSlider

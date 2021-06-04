@@ -67,6 +67,7 @@ class FontSlider extends Component {
         };
     };
     render() {
+        console.log(this.state.font)
         const { classes } = this.props;
         return (
             <div className={classes.root}>
