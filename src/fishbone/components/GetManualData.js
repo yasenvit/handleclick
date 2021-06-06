@@ -7,22 +7,30 @@ export default class GetManualData extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            goal: "",
+            title: "",
             inputFor: "",
             currentValue: "",
             previousValue: "",
-            branches: []
+            branches: [],
+            prevInput: ""
         };
         this.keyPress = this.keyPress.bind(this);
     };
 
-    completeElement = () => {
-        this.setState({ inputFor: "Enter Branch" });
+    getBranch = () => {
+        this.setState({
+            inputFor: "Enter Branch",
+            prevInput: "Enter Branch"
+        });
     };
 
     addTitle = () => {
         this.setState({ inputFor: "Title (optional)" });
     }
-
+    getComplete = () => {
+        this.setState({ inputFor: "" })
+    }
     handleChange = () => ({ target: { value } }) => {
         this.setState({
             currentValue: value
@@ -34,8 +42,9 @@ export default class GetManualData extends Component {
             title: "",
             goal: "",
             branches: [],
-
-            inputFor: "Enter Goal"
+            inputFor: "Enter Goal",
+            prevInput: "",
+            currentValue: ""
         }));
     };
 
@@ -46,7 +55,7 @@ export default class GetManualData extends Component {
         };
     };
 
-    getInput = name => {
+    getInput = (name) => {
         const { currentValue, branches } = this.state
         if (currentValue === "" && name !== "Title (optional)") {
             alert("Empty input isn't allowed")
@@ -57,12 +66,14 @@ export default class GetManualData extends Component {
                     goal: currentValue,
                     currentValue: "",
                     inputFor: "Enter Branch",
+                    prevInput: "Enter Branch"
                 })
             } else if (name === "Enter Branch") {
                 this.setState(prevState => ({
                     branches: [...prevState.branches, { name: currentValue, elements: [] }],
                     branchName: currentValue,
                     inputFor: "Enter Element",
+                    prevInput: "Enter Element",
                     currentValue: "",
                 }))
             } else if (name === "Enter Element") {
@@ -74,13 +85,15 @@ export default class GetManualData extends Component {
                         newObj["elements"] = object.elements;
                         return newObj;
                     }),
+                    prevInput: "Enter Element",
                     currentValue: ""
                 })
             } else if (name === "Title (optional)") {
+                console.log(this.state.prevInput)
                 this.setState(state => ({
                     title: currentValue,
                     currentValue: "",
-                    inputFor: "",
+                    inputFor: this.state.prevInput ? this.state.prevInput : "Enter Goal"
                 }))
             };
         };
@@ -95,7 +108,6 @@ export default class GetManualData extends Component {
                 inputFor: "",
                 currentValue: "",
                 previousValue: "",
-
             })
         } else if ((inputFor === "Enter Branch" && branches.length > 0) || inputFor === "Title (optional)") {
             this.setState({ inputFor: "Enter Element" })
@@ -156,36 +168,31 @@ export default class GetManualData extends Component {
         }
     }
     render() {
+        console.log(this.state.prevInput, "render", this.state.title)
         const { title, goal, branches, currentValue, inputFor,
             branchName, previousValue } = this.state;
-        let manualCreationButton, formField, buildCanvas, backButton;
+        let initialButton, formField;
         if (!inputFor) {
-            manualCreationButton = (
-                <div className="site">
-                    <Button
-                        variant="text"
-                        style={formButtonStyle}
-                        color="primary"
-                        onClick={() => { this.getCreatedManually() }}
-                    >
-                        get started
-                    </Button>
-                </div >
+            initialButton = (
+                <Button
+                    variant="text"
+                    style={buttonStyle}
+                    color="primary"
+                    onClick={() => { this.getCreatedManually() }}
+                >
+                    create
+                </Button>
             );
-        };
-
-        if (inputFor) {
-            backButton = (
-                <div className="site">
-                    <Button
-                        variant="text"
-                        style={formButtonStyle}
-                        color="primary"
-                        onClick={() => { this.getBack() }}
-                    >
-                        back
-                    </Button>
-                </div>
+        } else {
+            initialButton = (
+                <Button
+                    variant="text"
+                    style={buttonStyle}
+                    color="primary"
+                    onClick={() => { this.getBack() }}
+                >
+                    back
+                </Button>
             );
         };
         formField = (<ManualFormField
@@ -195,44 +202,35 @@ export default class GetManualData extends Component {
             inputFor={inputFor}
             title={title}
             getInput={this.getInput}
-            completeElement={this.completeElement}
-
+            getBranch={this.getBranch}
             addTitle={this.addTitle}
+            getComplete={this.getComplete}
             branchName={branchName}
             keyPress={this.keyPress}
             getData={this.props.getData}
+            buttonStyle={buttonStyle}
         />);
 
         return (
-
-            <div className="fishbone-manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
-                {backButton}
-                {manualCreationButton}
-                {formField}
+            <div className="manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
+                <div className="manual-create-form-buttons-initial">
+                    {initialButton}
+                </div>
+                <div className="manual-create-form-buttons-field">
+                    {formField}
+                </div>
             </div>
-
         );
     };
 };
-
-var formButtonStyle = {
-    maxWidth: '200px',
-    maxHeight: '150px',
-    minWidth: '200px',
-    minHeight: '40px',
-    padding: '0px',
-    margin: '0px',
+var buttonStyle = {
+    width: '120px',
+    height: '40px',
+    margin: '0px 5px 0px 5px',
     fontFamily: "Computer Modern TypeWriter",
-    fontSize: '15px',
-    fontWeight: 750,
+    fontSize: '12px',
+    fontWeight: 600,
     borderWidth: '1.6px',
     backgroundColor: '#5b6692',
     color: "whitesmoke"
-};
-
-const arrowButtonStyle = {
-    fontSize: "10px",
-    backgroundColor: '#5b6692',
-    color: 'whitesmoke',
-    border: "none"
 };

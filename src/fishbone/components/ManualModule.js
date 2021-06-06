@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Fragment } from 'react';
 import BuildDiagram from './BuildDiagram';
 
 export default class ManualModule extends Component {
@@ -7,11 +8,9 @@ export default class ManualModule extends Component {
     }
     render() {
         return (
-            <div className="fishbone-manual-create">
-                <div className="fishbone-manual-create-container">
-                    <BuildDiagram page="manual" />
-                </div>
-            </div>
+            <Fragment>
+                <BuildDiagram page="manual" />
+            </Fragment>
         )
     }
 }

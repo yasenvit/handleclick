@@ -55,9 +55,9 @@ export default class AboutFishbone extends Component {
                     </ul>
                     <h4>LETS GET STARTED</h4>
                 </div>
-                { buttons}
+                {buttons}
                 <div id="display" className="about-display">
-                    <GetSample arrowButtonStyle={arrowButtonStyle} />
+                    <GetSample />
                 </div>
             </div >
         );
@@ -79,10 +79,4 @@ var formButtonStyle = {
     backgroundColor: "#5b6692",
 };
 
-const arrowButtonStyle = {
-    fontSize: "10px",
-    backgroundColor: '#5b6692',
-    color: 'whitesmoke',
-    border: "none",
-    marginRight: "0.5em",
-};
+

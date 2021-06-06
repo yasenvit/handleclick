@@ -7,6 +7,7 @@ const Axis = (props) => {
     const { canvas, goal, leftEdge, axisHeightPosition, axisLength, canvasWidth, canvasHeight, branches } = props;
     let axis = canvas.getContext('2d');
     axis.clearRect(0, 0, canvasWidth, canvasHeight);
+    PrintTitle(props);
     if (goal) {
         axis.beginPath();
         axis.moveTo(leftEdge, axisHeightPosition);
@@ -15,7 +16,7 @@ const Axis = (props) => {
         axis.strokeStyle = '#333333';
         axis.stroke();
         let goalSpace = PrintGoal(props, leftEdge, leftEdge + axisLength, axisHeightPosition,).goalSpace;
-        PrintTitle(props);
+
         if (branches && branches.length > 0) {
             let upperSideObjects = [];
             let bottomSideObjects = [];

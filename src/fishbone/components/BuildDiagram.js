@@ -69,7 +69,6 @@ export default class BuildDiagram extends Component {
         let angleRadian = this.getRadianFromDegree(angleDegree);
         let canvas_dimensions = this.getDisplaySize()
         let { canvasWidth, canvasHeight } = canvas_dimensions
-        console.log(canvasWidth)
         let axisHeightPosition = Math.round(canvasHeight / 2) + 0.5;
         let axisLength = Math.round(canvasWidth * axisIdx) - 50;
         let leftEdge = isRightDirection ? Math.round((canvasWidth - axisLength) / 2)
@@ -147,7 +146,6 @@ export default class BuildDiagram extends Component {
     };
 
     settingData(obj) {
-        console.log(obj)
         if (obj.branches) {
             this.setState({
                 goal: obj.goal,
@@ -165,14 +163,12 @@ export default class BuildDiagram extends Component {
     };
 
     getRadianFromDegree(deg) {
-        /* finding radian from angle degree*/
         let radianAngle = deg * (Math.PI / 180);
         return radianAngle;
     }
     getOptimalFontSize = (arr) => {
         if (arr) {
             const { goalFontSize, branchFontSize, childFontSize } = GetOptimalFontSize(arr);
-            console.log(goalFontSize, branchFontSize, childFontSize)
             this.setState({
                 goalFontSize: goalFontSize,
                 goalOptimalFontSize: goalFontSize,
@@ -185,9 +181,9 @@ export default class BuildDiagram extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
+        console.log("prev>>", prevState.title, "<<, this.state.title>>", this.state.title, "<<")
         const { branches, goal, title, previousValue } = this.state;
-        if (goal !== prevState.goal ||
-            title !== prevState.title ||
+        if (
             branches !== prevState.branches ||
             previousValue !== prevState.previousValue
         ) {
@@ -214,7 +210,6 @@ export default class BuildDiagram extends Component {
         })
     }
     render() {
-        console.log(this.state.goal)
         const { canvasWidth, canvasHeight, isRightDirection, branches, sorted } = this.state;
         let displayDiagram;
         let buttonsCluster = (<div></div>)
@@ -241,7 +236,7 @@ export default class BuildDiagram extends Component {
                             getSorted={this.getSorted}
                             branches={branches}
                             sorted={sorted}
-                            arrowButtonStyle={this.props.arrowButtonStyle}
+                            arrowButtonStyle={arrowButtonStyle}
                         />
                         <div className="build-slider">
                             <FontSlider
@@ -249,15 +244,20 @@ export default class BuildDiagram extends Component {
                                 getFontSize={this.getFontSize}
                             />
                         </div>
-
                     </div>
                 </div>
                 <div className="build-display" id="display">
                     <DisplayDiagram diagram={displayDiagram} />
                 </div>
-
             </div>
         );
     };
 };
 
+const arrowButtonStyle = {
+    fontSize: "10px",
+    backgroundColor: '#5b6692',
+    color: 'whitesmoke',
+    border: "none",
+    marginRight: "0.5em",
+};
