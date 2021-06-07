@@ -4,6 +4,7 @@ import Axis from './utils/Axis';
 import ArrowButton from './ArrowButton';
 import GetOptimalFontSize from './utils/GetOptimalFontSize';
 import FontSlider from './FontSlider';
+import DiagramScale from './DiagramScale';
 import '../FishboneStyling.css';
 import GetManualData from './GetManualData.js'
 
@@ -30,10 +31,11 @@ export default class BuildDiagram extends Component {
         childFontSize: "",
         branchFontSize: "",
         goalFontSize: "",
+        diagramSize: 1
     };
-    getDisplaySize = () => {
+    getDisplaySize = (idx) => {
         var elmnt = document.getElementById("display");
-        var canvas_width = elmnt.offsetWidth * 0.95
+        var canvas_width = elmnt.offsetWidth * 0.95 * idx
         var canvas_height = Math.round(canvas_width / 1.4142)
         this.setState({
             canvasWidth: canvas_width,
@@ -43,7 +45,7 @@ export default class BuildDiagram extends Component {
     }
 
     printCanvas = () => {
-        const dataUrl = document.getElementById('myCanvas').toDataURL();
+        const dataUrl = document.getElementById('display').toDataURL();
         let windowContent = '<!DOCTYPE html>';
         windowContent += '<html>';
         windowContent += '<head><title>Print canvas</title></head>';
@@ -67,7 +69,7 @@ export default class BuildDiagram extends Component {
         let canvas = document.getElementById("myCanvas");
         let angleDegree = this.state.isRightDirection ? rightAngle : leftAngle;
         let angleRadian = this.getRadianFromDegree(angleDegree);
-        let canvas_dimensions = this.getDisplaySize()
+        let canvas_dimensions = this.getDisplaySize(this.state.diagramSize)
         let { canvasWidth, canvasHeight } = canvas_dimensions
         let axisHeightPosition = Math.round(canvasHeight / 2) + 0.5;
         let axisLength = Math.round(canvasWidth * axisIdx) - 50;
@@ -89,7 +91,11 @@ export default class BuildDiagram extends Component {
             bottomEdge
         });
     };
-
+    setDiagramSize = (size) => {
+        this.setState({
+            diagramSize: size,
+        });
+    };
     getFontSize = (size) => {
         this.setState({
             childFontSize: size,
@@ -132,18 +138,18 @@ export default class BuildDiagram extends Component {
         };
     };
 
-    getOriginBranches = (data) => {
-        if (data) {
-            this.setState({
-                originBranches: data.map(object => {
-                    let newObj = {};
-                    newObj["name"] = object.name;
-                    newObj["elements"] = object.elements;
-                    return newObj;
-                })
-            });
-        }
-    };
+    // getOriginBranches = (data) => {
+    //     if (data) {
+    //         this.setState({
+    //             originBranches: data.map(object => {
+    //                 let newObj = {};
+    //                 newObj["name"] = object.name;
+    //                 newObj["elements"] = object.elements;
+    //                 return newObj;
+    //             })
+    //         });
+    //     }
+    // };
 
     settingData(obj) {
         if (obj.branches) {
@@ -181,25 +187,40 @@ export default class BuildDiagram extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("prev>>", prevState.title, "<<, this.state.title>>", this.state.title, "<<")
-        const { branches, goal, title, previousValue } = this.state;
+        if (this.props.goal !== prevProps.goal ||
+            this.props.title !== prevProps.title ||
+            this.props.branches !== prevProps.branches ||
+            this.props.previousValue !== prevProps.previousValue
+        ) {
+            // this.getOriginBranches(this.props.branches)
+            this.settingData(this.props)
+            this.getOptimalFontSize(this.props.branches)
+        };
+        const { branches, goal, title, previousValue, diagramSize,
+            isRightDirection, childFontSize, sorted } = this.state;
         if (
             branches !== prevState.branches ||
             previousValue !== prevState.previousValue
         ) {
             this.getOptimalFontSize(this.state.branches)
         };
-        if (this.state.branches !== prevState.branches ||
-            this.state.goal !== prevState.goal ||
-            this.state.title !== prevState.title ||
-            this.state.isRightDirection !== prevState.isRightDirection ||
-            this.state.childFontSize !== prevState.childFontSize ||
-            this.state.sorted !== prevState.sorted ||
-            this.state.previousValue !== prevState.previousValue ||
-            this.state.childFontSize !== prevState.childFontSize
+        if (branches !== prevState.branches ||
+            goal !== prevState.goal ||
+            title !== prevState.title ||
+            previousValue !== prevState.previousValue ||
+            isRightDirection !== prevState.isRightDirection ||
+            childFontSize !== prevState.childFontSize ||
+            sorted !== prevState.sorted ||
+            childFontSize !== prevState.childFontSize ||
+            diagramSize !== prevState.diagramSize
         ) {
             Axis(this.state)
         };
+        if (diagramSize !== prevState.diagramSize) {
+            this.getDisplaySize(diagramSize)
+            this.settingData(this.state)
+            this.getCredential()
+        }
     };
     getData = (obj) => {
         this.setState({
@@ -221,7 +242,6 @@ export default class BuildDiagram extends Component {
         displayDiagram = (
             <canvas className="canvas" id="myCanvas" width={canvasWidth} height={canvasHeight}></canvas>
         );
-
         return (
             <div className="build">
                 <div className="build-header">
@@ -238,11 +258,19 @@ export default class BuildDiagram extends Component {
                             sorted={sorted}
                             arrowButtonStyle={arrowButtonStyle}
                         />
-                        <div className="build-slider">
-                            <FontSlider
-                                childOptimalFontSize={this.state.childOptimalFontSize}
-                                getFontSize={this.getFontSize}
-                            />
+                        <div className="build-sizing">
+                            <div className="build-sizer">
+                                <DiagramScale
+                                    diagramSize={this.state.diagramSize}
+                                    setDiagramSize={this.setDiagramSize}
+                                />
+                            </div>
+                            <div className="build-slider">
+                                <FontSlider
+                                    childOptimalFontSize={this.state.childOptimalFontSize}
+                                    getFontSize={this.getFontSize}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

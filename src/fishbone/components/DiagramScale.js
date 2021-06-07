@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     root: {
-        // width: 40 + theme.spacing(3) * 2,
         width: '80%',
         color: '#333333',
         textAlign: 'center',
         fontFamily: 'Computer Modern Typewriter',
     },
     margin: {
-        // height: theme.spacing(3),
     },
 });
 
@@ -48,23 +45,23 @@ const ChangeFontSlider = withStyles({
     },
 })(Slider);
 
-class FontSlider extends Component {
+class DiagramScale extends Component {
     state = {
-        font: 5
+        diagramSize: 1
     }
     handleChange = (event, newValue) => {
         event.preventDefault();
-        this.setState({ font: newValue });
-        this.props.getFontSize(newValue);
+        this.setState({ diagramSize: newValue });
+        this.props.setDiagramSize(newValue);
     };
-    getCurrentFont = (font) => {
+    getDiagramSize = (size) => {
         this.setState({
-            font: font
+            diagramSize: size
         });
     };
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.childOptimalFontSize !== this.props.childOptimalFontSize) {
-            this.getCurrentFont(this.props.childOptimalFontSize);
+        if (prevProps.diagramSize !== this.props.diagramSize) {
+            this.getDiagramSize(this.props.diagramSize);
         };
     };
     render() {
@@ -74,15 +71,14 @@ class FontSlider extends Component {
                 <div className={classes.margin} />
                 <ChangeFontSlider
                     valueLabelDisplay="auto"
-                    value={this.state.font}
+                    value={this.state.diagramSize}
                     onChange={this.handleChange}
-                    min={5}
-                    max={15}
-                    step={0.5}
+                    min={0.4}
+                    max={1}
+                    step={0.05}
                 />
-                {/* <Typography gutterBottom>Font size</Typography> */}
             </div>
         )
     }
 }
-export default withStyles(styles)(FontSlider);
+export default withStyles(styles)(DiagramScale);

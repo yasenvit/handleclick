@@ -81,7 +81,6 @@ export default class ManualFormField extends Component {
                     {inputField}
                     {submitButton}
                     {getBranchButton}
-
                 </div>
                 <div className="manual-create-form-buttons-field-title">
                     {buttonTitle}

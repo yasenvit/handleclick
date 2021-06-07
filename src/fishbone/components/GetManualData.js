@@ -180,7 +180,7 @@ export default class GetManualData extends Component {
                     color="primary"
                     onClick={() => { this.getCreatedManually() }}
                 >
-                    create
+                    create new
                 </Button>
             );
         } else {
