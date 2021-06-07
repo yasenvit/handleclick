@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import GetJsonData from './components/GetJsonData'
-import GetManualData from './components/GetManualData'
 import ManualModule from './components/ManualModule'
 import AboutFishbone from './components/AboutFishbone'
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import NoMatch from '../components/NoMatch'
 import { ListItem, ListItemText } from "@material-ui/core"
@@ -60,12 +59,12 @@ export default class Fishbone extends Component {
                 <div className="fishbone-nav">
                     <div className={this.classList({
                         'fishbone-nav-elem': true,
-                        'fishbone-nav-elem-active': this.state.isActive == "about"
+                        'fishbone-nav-elem-active': this.state.isActive === "about"
                     })}>
                         <NavLink to={`${this.props.match.url}`} onClick={() => this.makeActive("about")}
                             className={this.classList({
                                 'fishbone-elem-link': true,
-                                'fishbone-elem-link-active': this.state.isActive == "about"
+                                'fishbone-elem-link-active': this.state.isActive === "about"
                             })}>
                             <ListItem button className='fishbone-elem-link-listitem'>
                                 <ListItemText primary='About Diagram' />
@@ -74,12 +73,12 @@ export default class Fishbone extends Component {
                     </div>
                     <div className={this.classList({
                         'fishbone-nav-elem': true,
-                        'fishbone-nav-elem-active': this.state.isActive == "manual"
+                        'fishbone-nav-elem-active': this.state.isActive === "manual"
                     })}>
                         <NavLink to={`${this.props.match.url}/manual`} onClick={() => this.makeActive("manual")}
                             className={this.classList({
                                 'fishbone-elem-link': true,
-                                'fishbone-elem-link-active': this.state.isActive == "manual"
+                                'fishbone-elem-link-active': this.state.isActive === "manual"
                             })}>
                             <ListItem button className='fishbone-elem-link-listitem'>
                                 <ListItemText primary='Manual' />
@@ -88,12 +87,12 @@ export default class Fishbone extends Component {
                     </div>
                     <div className={this.classList({
                         'fishbone-nav-elem': true,
-                        'fishbone-nav-elem-active': this.state.isActive == "json"
+                        'fishbone-nav-elem-active': this.state.isActive === "json"
                     })}>
                         <NavLink to={`${this.props.match.url}/json`} onClick={() => this.makeActive("json")}
                             className={this.classList({
                                 'fishbone-elem-link': true,
-                                'fishbone-elem-link-active': this.state.isActive == "json"
+                                'fishbone-elem-link-active': this.state.isActive === "json"
                             })}>
                             <ListItem button className='fishbone-elem-link-listitem'>
                                 <ListItemText primary='Json' />

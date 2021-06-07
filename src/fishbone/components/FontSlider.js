@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
+
 
 const styles = theme => ({
     root: {
-        // width: 40 + theme.spacing(3) * 2,
         width: '80%',
         color: '#333333',
         textAlign: 'center',
         fontFamily: 'Computer Modern Typewriter',
     },
     margin: {
-        // height: theme.spacing(3),
     },
 });
 

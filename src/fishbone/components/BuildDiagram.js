@@ -32,6 +32,7 @@ export default class BuildDiagram extends Component {
         goalFontSize: "",
         diagramSize: 1
     };
+
     printCanvas = () => {
         const dataUrl = document.getElementById('myCanvas').toDataURL();
         let windowContent = '<!DOCTYPE html>';
@@ -52,18 +53,22 @@ export default class BuildDiagram extends Component {
         }, true);
     };
 
-    getDisplaySize = (idx) => {
-        var elmnt = document.getElementById("display");
-        var canvas_width = elmnt.offsetWidth * 0.95 * idx
-        var canvas_height = Math.round(canvas_width / 1.4142)
-        this.setState({
-            canvasWidth: canvas_width,
-            canvasHeight: canvas_height
-        })
-        return { "canvasWidth": canvas_width, "canvasHeight": canvas_height }
-    }
-
-
+    settingData(obj) {
+        if (obj.branches) {
+            this.setState({
+                goal: obj.goal,
+                branches: obj.branches.map(object => {
+                    let newObj = {};
+                    newObj["name"] = object.name;
+                    newObj["elements"] = object.elements;
+                    return newObj;
+                }),
+                title: obj.title,
+                currentValue: obj.currentValue,
+                previousValue: obj.previousValue,
+            });
+        }
+    };
 
     getCredential = () => {
         const { rightAngle, leftAngle, axisIdx, isRightDirection } = this.state;
@@ -92,11 +97,24 @@ export default class BuildDiagram extends Component {
             bottomEdge
         });
     };
+
+    getDisplaySize = (idx) => {
+        var elmnt = document.getElementById("display");
+        var canvas_width = elmnt.offsetWidth * 0.95 * idx
+        var canvas_height = Math.round(canvas_width / 1.4142)
+        this.setState({
+            canvasWidth: canvas_width,
+            canvasHeight: canvas_height
+        })
+        return { "canvasWidth": canvas_width, "canvasHeight": canvas_height }
+    }
+
     setDiagramSize = (size) => {
         this.setState({
             diagramSize: size,
         });
     };
+
     getFontSize = (size) => {
         this.setState({
             childFontSize: size,
@@ -107,11 +125,6 @@ export default class BuildDiagram extends Component {
 
     toggleHandler = () => {
         this.setState(state => ({ isRightDirection: !state.isRightDirection }));
-    };
-
-    componentDidMount() {
-        this.getDisplaySize();
-        this.getCredential();
     };
 
     getSorted = (dir, arr) => {
@@ -138,37 +151,6 @@ export default class BuildDiagram extends Component {
             });
         };
     };
-
-    // getOriginBranches = (data) => {
-    //     if (data) {
-    //         this.setState({
-    //             originBranches: data.map(object => {
-    //                 let newObj = {};
-    //                 newObj["name"] = object.name;
-    //                 newObj["elements"] = object.elements;
-    //                 return newObj;
-    //             })
-    //         });
-    //     }
-    // };
-
-    settingData(obj) {
-        if (obj.branches) {
-            this.setState({
-                goal: obj.goal,
-                branches: obj.branches.map(object => {
-                    let newObj = {};
-                    newObj["name"] = object.name;
-                    newObj["elements"] = object.elements;
-                    return newObj;
-                }),
-                title: obj.title,
-                currentValue: obj.currentValue,
-                previousValue: obj.previousValue,
-            });
-        }
-    };
-
     getRadianFromDegree(deg) {
         let radianAngle = deg * (Math.PI / 180);
         return radianAngle;
@@ -186,14 +168,16 @@ export default class BuildDiagram extends Component {
             });
         };
     };
-
+    getData = (obj) => {
+        this.setState({
+            goal: obj.goal,
+            title: obj.title,
+            branches: obj.branches,
+            previousValue: obj.previousValue
+        })
+    }
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.goal !== prevProps.goal ||
-            this.props.title !== prevProps.title ||
-            this.props.branches !== prevProps.branches ||
-            this.props.previousValue !== prevProps.previousValue
-        ) {
-            // this.getOriginBranches(this.props.branches)
+        if (this.props.goal !== prevProps.goal) {
             this.settingData(this.props)
             this.getOptimalFontSize(this.props.branches)
         };
@@ -223,14 +207,11 @@ export default class BuildDiagram extends Component {
             this.getCredential()
         }
     };
-    getData = (obj) => {
-        this.setState({
-            goal: obj.goal,
-            title: obj.title,
-            branches: obj.branches,
-            previousValue: obj.previousValue
-        })
-    }
+
+    componentDidMount() {
+        this.getDisplaySize();
+        this.getCredential();
+    };
     render() {
         const { canvasWidth, canvasHeight, isRightDirection, branches, sorted } = this.state;
         let displayDiagram;

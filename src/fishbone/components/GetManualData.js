@@ -50,7 +50,6 @@ export default class GetManualData extends Component {
 
     keyPress(e) {
         if (e.keyCode === 13) {
-            console.log('value', e.target.value);
             this.getInput(this.state.inputFor);
         };
     };
@@ -89,11 +88,10 @@ export default class GetManualData extends Component {
                     currentValue: ""
                 })
             } else if (name === "Title (optional)") {
-                console.log(this.state.prevInput)
                 this.setState(state => ({
                     title: currentValue,
                     currentValue: "",
-                    inputFor: this.state.prevInput ? this.state.prevInput : "Enter Goal"
+                    inputFor: state.prevInput ? state.prevInput : "Enter Goal"
                 }))
             };
         };
@@ -168,7 +166,6 @@ export default class GetManualData extends Component {
         }
     }
     render() {
-        console.log(this.state.prevInput, "render", this.state.title)
         const { title, goal, branches, currentValue, inputFor,
             branchName, previousValue } = this.state;
         let initialButton, formField;
