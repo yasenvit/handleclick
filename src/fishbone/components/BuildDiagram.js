@@ -8,7 +8,6 @@ import DiagramScale from './DiagramScale';
 import '../FishboneStyling.css';
 import GetManualData from './GetManualData.js'
 
-
 export default class BuildDiagram extends Component {
     state = {
         title: "",
@@ -33,19 +32,8 @@ export default class BuildDiagram extends Component {
         goalFontSize: "",
         diagramSize: 1
     };
-    getDisplaySize = (idx) => {
-        var elmnt = document.getElementById("display");
-        var canvas_width = elmnt.offsetWidth * 0.95 * idx
-        var canvas_height = Math.round(canvas_width / 1.4142)
-        this.setState({
-            canvasWidth: canvas_width,
-            canvasHeight: canvas_height
-        })
-        return { "canvasWidth": canvas_width, "canvasHeight": canvas_height }
-    }
-
     printCanvas = () => {
-        const dataUrl = document.getElementById('display').toDataURL();
+        const dataUrl = document.getElementById('myCanvas').toDataURL();
         let windowContent = '<!DOCTYPE html>';
         windowContent += '<html>';
         windowContent += '<head><title>Print canvas</title></head>';
@@ -63,6 +51,19 @@ export default class BuildDiagram extends Component {
             printWin.close();
         }, true);
     };
+
+    getDisplaySize = (idx) => {
+        var elmnt = document.getElementById("display");
+        var canvas_width = elmnt.offsetWidth * 0.95 * idx
+        var canvas_height = Math.round(canvas_width / 1.4142)
+        this.setState({
+            canvasWidth: canvas_width,
+            canvasHeight: canvas_height
+        })
+        return { "canvasWidth": canvas_width, "canvasHeight": canvas_height }
+    }
+
+
 
     getCredential = () => {
         const { rightAngle, leftAngle, axisIdx, isRightDirection } = this.state;
