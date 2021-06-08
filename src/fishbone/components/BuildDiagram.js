@@ -176,8 +176,22 @@ export default class BuildDiagram extends Component {
             previousValue: obj.previousValue
         })
     }
+    getOriginBranches = (data) => {
+        this.setState({
+            originBranches: data.map(object => {
+                let newObj = {};
+                newObj["name"] = object.name;
+                newObj["elements"] = object.elements;
+                return newObj;
+            })
+        });
+    };
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.goal !== prevProps.goal) {
+        if (this.props.goal !== prevProps.goal ||
+            this.props.title !== prevState.title ||
+            this.props.branches !== prevProps.branches ||
+            this.props.previousValue !== prevProps.previousValue) {
+            this.getOriginBranches(this.props.branches)
             this.settingData(this.props)
             this.getOptimalFontSize(this.props.branches)
         };
@@ -213,6 +227,8 @@ export default class BuildDiagram extends Component {
         this.getCredential();
     };
     render() {
+        console.log(this.props.goal, "<-props")
+        console.log(this.state.goal, "<-state")
         const { canvasWidth, canvasHeight, isRightDirection, branches, sorted } = this.state;
         let displayDiagram;
         let buttonsCluster = (<div></div>)

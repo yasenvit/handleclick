@@ -48,7 +48,7 @@ const ChangeFontSlider = withStyles({
 
 class FontSlider extends Component {
     state = {
-        font: 5
+        font: 8
     }
     handleChange = (event, newValue) => {
         event.preventDefault();

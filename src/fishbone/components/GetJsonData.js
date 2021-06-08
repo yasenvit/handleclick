@@ -17,7 +17,6 @@ export default class GetJsonData extends Component {
     };
 
     handleChange = () => ({ target: { value } }) => {
-        console.log(value, "<--")
         this.setState({
             currentValue: value
         });
