@@ -13,7 +13,8 @@ const Branch = (props, totalBranches, branch, idx, shift, side, goalSpace) => {
     let firstBranchShiftIndex = totalBranches > 10 ? 0.8 : totalBranches > 8 ? 0.7 : totalBranches > 6 ? 0.6 : totalBranches > 4 ? 0.4 : 0;
     let xStart = isRightDirection ?
         Math.round(leftEdge + axisLength - (shift * idx) + shift * firstBranchShiftIndex) + 0.5 :  // changing length btw goal and first branch
-        Math.round(leftEdge + (shift * idx) - shift * firstBranchShiftIndex) + 0.5;                   // changing length btw goal and first branch
+        Math.round(leftEdge + (shift * idx) - shift * firstBranchShiftIndex) + 0.5;
+    // changing length btw goal and first branch
     let yStart = axisHeightPosition;
     let startPoints = [xStart, yStart];
     // measure approx branchName height
@@ -38,6 +39,7 @@ const Branch = (props, totalBranches, branch, idx, shift, side, goalSpace) => {
     PointAndName(props, shift, branchElements, idx, xStart, xEnd, yStart, yEnd, side, goalSpace);
     BranchName(props, branchName, side, xEnd, yEnd);
 };
+
 const getCoordsFromHeightAngle = (isRightDirection, angleRadian, [x, y], height, leftMaxWidth, rightMaxWidth, spineLevel) => {
     /* function gives coords of bone end */
     if (isRightDirection) {

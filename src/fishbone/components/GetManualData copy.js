@@ -60,7 +60,7 @@ export default class GetManualData extends Component {
             alert("Empty input isn't allowed")
         } else {
             if (name === "Enter Goal") {
-                this.props.getData({ "incomeGoal": currentValue })
+                this.props.getData({ "goal": currentValue })
                 this.setState({
                     goal: currentValue,
                     currentValue: "",
@@ -158,16 +158,14 @@ export default class GetManualData extends Component {
             || branches !== prevState.branches || previousValue !== prevState.previousValue
         ) {
             this.props.getData({
-                incomeBranches: branches,
-                incomeGoal: goal,
-                incomeTitle: title,
-                incomePreviousValue: previousValue
+                branches: branches,
+                goal: goal,
+                title: title,
+                previousValue: previousValue
             })
         }
     }
     render() {
-        console.log(this.state.branches)
-        console.log(this.state.previousValue)
         const { title, goal, branches, currentValue, inputFor,
             branchName, previousValue } = this.state;
         let initialButton, formField;

@@ -47,21 +47,21 @@ const ChangeFontSlider = withStyles({
 
 class DiagramScale extends Component {
     state = {
-        diagramSize: 1
+        scaleIdx: 1
     }
     handleChange = (event, newValue) => {
         event.preventDefault();
-        this.setState({ diagramSize: newValue });
-        this.props.setDiagramSize(newValue);
+        this.setState({ scaleIdx: newValue });
+        this.props.getScaleIdx(newValue);
     };
     getDiagramSize = (size) => {
         this.setState({
-            diagramSize: size
+            scaleIdx: size
         });
     };
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.diagramSize !== this.props.diagramSize) {
-            this.getDiagramSize(this.props.diagramSize);
+        if (prevProps.scaleIdx !== this.props.scaleIdx) {
+            this.getDiagramSize(this.props.scaleIdx);
         };
     };
     render() {
@@ -71,7 +71,7 @@ class DiagramScale extends Component {
                 <div className={classes.margin} />
                 <ChangeFontSlider
                     valueLabelDisplay="auto"
-                    value={this.state.diagramSize}
+                    value={this.state.scaleIdx}
                     onChange={this.handleChange}
                     min={0.4}
                     max={1}

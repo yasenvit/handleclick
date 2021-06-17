@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import DisplayDiagram from './DisplayDiagram';
 import Axis from './utils/Axis';
-import PrintGoal from './utils/PrintGoal';
-import LevelBranches from './utils/LevelBranches';
 import ArrowButton from './ArrowButton';
 import GetOptimalFontSize from './utils/GetOptimalFontSize';
 import FontSlider from './FontSlider';
@@ -12,7 +10,6 @@ import GetManualData from './GetManualData.js'
 
 export default class BuildDiagram extends Component {
     state = {
-        canvas: "",
         title: "",
         goal: "",
         currentValue: "",
@@ -34,10 +31,7 @@ export default class BuildDiagram extends Component {
         branchFontSize: "",
         goalFontSize: "",
         scaleIdx: 1,
-        incomeGoal: "",
-        incomeTitle: "",
-        incomeBranches: [],
-        incomePreviousValue: ""
+        // diagramSize: 1
     };
 
     printCanvas = () => {
@@ -60,71 +54,38 @@ export default class BuildDiagram extends Component {
         }, true);
     };
 
-    branchBuilder = () => {
-        const { branches } = this.state
-        if (branches && branches.length > 0) {
-            let upperSideObjects = [];
-            let bottomSideObjects = [];
-            for (let idx = 0; idx < branches.length; idx++) {
-                if (idx % 2) {
-                    bottomSideObjects.push(branches[idx]);
-                } else {
-                    upperSideObjects.push(branches[idx]);
-                };
-            };
-            let pairsQty = Math.max(upperSideObjects.length, bottomSideObjects.length);
-            let upperSide = "upperSide";
-            let bottomSide = "bottomSide";
-            LevelBranches(this.state, branches.length, upperSideObjects, pairsQty, upperSide);
-            LevelBranches(this.state, branches.length, bottomSideObjects, pairsQty, bottomSide);
-        };
-    }
-    diagramBuilder = () => {
-        const { leftEdge, axisLength, axisHeightPosition } = this.state
-        Axis(this.state);
-        let goalSpace = PrintGoal(this.state, leftEdge, leftEdge + axisLength, axisHeightPosition).goalSpace
-        this.branchBuilder();
-        this.setState({
-            goalSpace
-        })
-    }
-    settingIncomeData(obj) {
-        console.log("settingIncomeData")
-        this.setState({
-            goal: obj.goal,
-            title: obj.title,
-            previousValue: obj.previousValue
-            // currentValue: obj.currentValue,
-        })
-
+    settingData(obj) {
+        console.log("settingData")
         if (obj.branches) {
-            const { goalFontSize, branchFontSize, childFontSize } = GetOptimalFontSize(obj.branches);
             this.setState({
+                goal: obj.goal,
                 branches: obj.branches.map(object => {
                     let newObj = {};
                     newObj["name"] = object.name;
                     newObj["elements"] = object.elements;
                     return newObj;
                 }),
-                originBranches: obj.branches.map(object => {
-                    let newObj = {};
-                    newObj["name"] = object.name;
-                    newObj["elements"] = object.elements;
-                    return newObj;
-                }),
-                goalFontSize: goalFontSize,
-                goalOptimalFontSize: goalFontSize,
-                branchFontSize: branchFontSize,
-                branchOptimalFontSize: branchFontSize,
-                childFontSize: childFontSize,
-                childOptimalFontSize: childFontSize
+                title: obj.title,
+                currentValue: obj.currentValue,
+                previousValue: obj.previousValue,
             });
         }
     };
 
-    getRadian = (direction) => {
-        const { rightAngle, leftAngle } = this.state;
-        let angleDegree = direction ? rightAngle : leftAngle;
+    getOriginBranches = (data) => {
+        console.log("getOriginBranches")
+        this.setState({
+            originBranches: data.map(object => {
+                let newObj = {};
+                newObj["name"] = object.name;
+                newObj["elements"] = object.elements;
+                return newObj;
+            })
+        });
+    };
+    getRadian = () => {
+        const { rightAngle, leftAngle, isRightDirection } = this.state;
+        let angleDegree = isRightDirection ? rightAngle : leftAngle;
         let angleRadian = angleDegree * (Math.PI / 180);;
         return angleRadian
     }
@@ -134,9 +95,9 @@ export default class BuildDiagram extends Component {
         var canvasHeight = Math.round(canvasWidth / 1.4142)
         return { "canvasWidth": canvasWidth, "canvasHeight": canvasHeight }
     }
-    preBuilder = () => {
-        console.log("preBuilder function")
-        let angleRadian = this.getRadian(this.state.isRightDirection)
+    getCredential = () => {
+        console.log("getCredentials")
+        let angleRadian = this.getRadian()
         let { canvasWidth, canvasHeight } = this.getDisplaySize(this.state.scaleIdx)
         const { axisIdx, isRightDirection } = this.state;
         let canvas = document.getElementById("myCanvas");
@@ -148,6 +109,7 @@ export default class BuildDiagram extends Component {
             : Math.round((canvasWidth - axisLength) / 2);
         let topEdge = Math.round(canvasHeight * 0.08);
         let bottomEdge = Math.round(canvasHeight * 0.08);
+
         this.setState({
             canvas,
             canvasWidth,
@@ -176,8 +138,8 @@ export default class BuildDiagram extends Component {
     };
 
     toggleHandler = () => {
-        let angleRadian = this.getRadian(!this.state.isRightDirection)
-        this.setState(state => ({ isRightDirection: !state.isRightDirection, angleRadian: angleRadian }));
+        this.setState(state => ({ isRightDirection: !state.isRightDirection }));
+        // this.getCredential()
     };
 
     getSorted = (dir, arr) => {
@@ -188,6 +150,7 @@ export default class BuildDiagram extends Component {
                 sorted: dir
             });
         } else if (dir === "descend") {
+
             this.setState({
                 branches: arr.sort((a, b) => b.elements.length - a.elements.length),
                 sorted: dir
@@ -205,66 +168,104 @@ export default class BuildDiagram extends Component {
         };
     };
 
+    getOptimalFontSize = (arr) => {
+        console.log("getOptimalFontSize")
+        if (arr) {
+            const { goalFontSize, branchFontSize, childFontSize } = GetOptimalFontSize(arr);
+            this.setState({
+                goalFontSize: goalFontSize,
+                goalOptimalFontSize: goalFontSize,
+                branchFontSize: branchFontSize,
+                branchOptimalFontSize: branchFontSize,
+                childFontSize: childFontSize,
+                childOptimalFontSize: childFontSize
+            });
+        };
+    };
     getData = (obj) => {
         this.setState({
-            incomeGoal: obj.incomeGoal,
-            incomeTitle: obj.incomeTitle,
-            incomeBranches: obj.incomeBranches,
-            incomePreviousValue: obj.incomePreviousValue
+            goal: obj.goal,
+            title: obj.title,
+            branches: obj.branches,
+            previousValue: obj.previousValue
         })
     }
     componentDidUpdate(prevProps, prevState) {
-        const { canvas, goal, branches, childFontSize, sorted, isRightDirection, angleRadian, scaleIdx, canvasWidth,
-            previousValue, incomeGoal, incomeTitle, incomeBranches, incomePreviousValue } = this.state
-        console.log("DIDUPDATE >>", this.state.incomeBranches, "--", prevState.incomeBranches, "<<")
-        if (this.props.goal !== prevProps.goal
-            || this.props.title !== prevProps.title
-            || this.props.branches !== prevProps.branches
-            || this.props.previousValue !== prevProps.previousValue
-        ) {
-            console.log("props working")
-            this.settingIncomeData(this.props)
+        console.log("DIDUPDATE")
+
+        if (this.props.goal !== prevProps.goal ||
+            this.props.title !== prevState.title ||
+            this.props.branches !== prevProps.branches ||
+            this.props.previousValue !== prevProps.previousValue) {
+            console.log("props working, this goal->", this.props.goal, "prevProps GOAL->", prevProps.goal)
+            this.getOriginBranches(this.props.branches)
+            this.settingData(this.props)
+            this.getOptimalFontSize(this.props.branches)
         };
-        if (incomeGoal !== prevState.incomeGoal,
-            incomeTitle !== prevState.incomeTitle,
-            incomeBranches !== prevState.incomeBranches,
-            incomePreviousValue !== prevState.incomePreviousValue) {
-            console.log("incomedata working")
-            this.settingIncomeData({
-                "goal": incomeGoal,
-                "title": incomeTitle,
-                "branches": incomeBranches,
-                "previousValue": incomePreviousValue
-            })
-        }
+        const { branches, goal, title, previousValue, scaleIdx, canvasWidth,
+            isRightDirection, childFontSize, sorted, angleRadian } = this.state;
         if (
-            isRightDirection != prevState.isRightDirection
-            || scaleIdx != prevState.scaleIdx
-
+            branches !== prevState.branches ||
+            previousValue !== prevState.previousValue
         ) {
-            this.preBuilder()
+            console.log("branches or previousValue")
+            this.getOptimalFontSize(this.state.branches)
+        };
+        if (scaleIdx !== prevState.scaleIdx) {
+            console.log("SCALE")
+            this.getCredential()
+        }
+        if (branches !== prevState.branches) {
+            console.log("Branches--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (goal !== prevState.goal) {
+            console.log("Goal--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (title !== prevState.title) {
+            console.log("Title--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (previousValue !== prevState.previousValue) {
+            console.log("PrevValue--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (childFontSize !== prevState.childFontSize) {
+            console.log("ChildFontSize--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (isRightDirection !== prevState.isRightDirection) {
+            console.log("DIRECTION--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (sorted !== prevState.sorted) {
+            console.log("Sorted--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (canvasWidth !== prevState.canvasWidth) {
+            console.log("CanvasWidth--Axis")
+            // this.getCredential();
+            Axis(this.state)
+        } else if (angleRadian !== prevState.angleRadian) {
+            console.log("AngleRadian--Axis")
+            // this.getCredential();
+            Axis(this.state)
         }
 
-        if (canvas !== prevState.canvas
-            || goal !== prevState.goal
-            || childFontSize !== prevState.childFontSize
-            || branches !== prevState.branches
-            || sorted !== prevState.sorted
-            || angleRadian != prevState.angleRadian
-            || canvasWidth != prevState.canvasWidth
-        ) {
-            this.diagramBuilder()
-        };
     };
 
     componentDidMount() {
         console.log("componentDidMount")
-        this.preBuilder();
+        this.getCredential();
     };
     render() {
+        console.log("render=======")
+
         const { canvasWidth, canvasHeight, isRightDirection, branches, sorted, angleRadian } = this.state;
-        console.log("goal-->", this.state.goal)
-        console.log("branches-->", this.state.incomeBranches)
+        console.log("R-DIR==>", isRightDirection, "<==")
+        console.log("R-angleR==>", angleRadian, "<==")
+
         let displayDiagram;
         let buttonsCluster = (<div></div>)
         if (this.props.page && this.props.page === "manual") {

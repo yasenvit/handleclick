@@ -3,9 +3,12 @@ import PrintChild from './PrintChild';
 import ChildUnderline from './ChildUnderline';
 
 const PointAndName = (props, shift, elements, idx, xStart, xEnd, yStart, yEnd, side, goalSpace) => {
+    // console.log(elements)
     /* set points on given branch */
-    const { canvas, isRightDirection, angleRadian, lineColor } = props;
+    const { canvas, isRightDirection, angleRadian, lineColor, angleDegree } = props;
+    // console.log("isRight-", isRightDirection, "angleRadian-", angleRadian, "angleDegree", angleDegree, "<--props")
     let childrenQty = elements.length;
+    // console.log(xEnd, "<--")
     let hypotenuse = getHypotenuse(Math.abs(xEnd - xStart), Math.abs(yEnd - yStart));
     let step = idx === 1 ? (hypotenuse - goalSpace) / (childrenQty + 1) : hypotenuse / (childrenQty + 1);
     for (let pos = 1; pos <= childrenQty; pos++) {
@@ -13,6 +16,9 @@ const PointAndName = (props, shift, elements, idx, xStart, xEnd, yStart, yEnd, s
         let childHypo = idx === 1 ? goalSpace + step * pos : step * pos;
         const childPosition = getCoordsFromHypoAngle(isRightDirection, angleRadian, [xStart, yStart], childHypo, side);
         const [x, y] = childPosition;
+        // console.log("DIR-->", isRightDirection, "<--")
+        // console.log("angleR-->", angleRadian, "<--")
+        console.log("x-->", x, "<--")
         let point = canvas.getContext('2d');
         point.beginPath();
         point.arc(x, y, 1, 0, 1 * Math.PI, true);
@@ -36,7 +42,7 @@ const getCoordsFromHypoAngle = (isRightDirection, angleRadian, [x, y], hypo, sid
         height = hypo * Math.sin(3.14159 - angleRadian);
         width = hypo * Math.cos(3.14159 - angleRadian);
     };
-    return [Math.round(x - width), side === "upperSide" ? Math.round(y - height) : Math.round(y + height)];
+    return [Math.round(isRightDirection ? x - width : x + width), side === "upperSide" ? Math.round(y - height) : Math.round(y + height)];
 };
 
 export default PointAndName;

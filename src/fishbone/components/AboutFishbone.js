@@ -40,11 +40,11 @@ export default class AboutFishbone extends Component {
                     <p>Also called: cause-and-effect diagram, Ishikawa diagram.</p>
                     <div className="about-text-box">
                         <p> This cause analysis tool is considered one of the
-                        seven basic quality tools.
-                        The fishbone diagram identifies
-                        many possible causes for an effect or problem.
-                        It can be used to structure a brainstorming session.
-                        It immediately sorts ideas into useful categories.</p>
+                            seven basic quality tools.
+                            The fishbone diagram identifies
+                            many possible causes for an effect or problem.
+                            It can be used to structure a brainstorming session.
+                            It immediately sorts ideas into useful categories.</p>
                     </div>
 
                     <h4>WHEN TO USE A FISHBONE DIAGRAM</h4>
