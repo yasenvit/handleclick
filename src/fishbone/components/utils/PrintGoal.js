@@ -1,6 +1,7 @@
 import SplitText from "./SplitText";
 
 const PrintGoal = (props, xStart, xEnd, y) => {
+    console.log("Goal function")
     /* printing main goal */
     const { canvas, isRightDirection, canvasWidth, goalFontSize, goalColor, goal } = props;
     let goalText = canvas.getContext('2d');

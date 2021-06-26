@@ -9,6 +9,7 @@ import FontSlider from './FontSlider';
 import DiagramScale from './DiagramScale';
 import '../FishboneStyling.css';
 import GetManualData from './GetManualData.js'
+import PrintTitle from './utils/PrintTitle';
 
 export default class BuildDiagram extends Component {
     state = {
@@ -34,10 +35,6 @@ export default class BuildDiagram extends Component {
         branchFontSize: "",
         goalFontSize: "",
         scaleIdx: 1,
-        incomeGoal: "",
-        incomeTitle: "",
-        incomeBranches: [],
-        incomePreviousValue: ""
     };
 
     printCanvas = () => {
@@ -63,6 +60,7 @@ export default class BuildDiagram extends Component {
     branchBuilder = () => {
         const { branches } = this.state
         if (branches && branches.length > 0) {
+            console.log("BranchBuilder")
             let upperSideObjects = [];
             let bottomSideObjects = [];
             for (let idx = 0; idx < branches.length; idx++) {
@@ -80,13 +78,24 @@ export default class BuildDiagram extends Component {
         };
     }
     diagramBuilder = () => {
-        const { leftEdge, axisLength, axisHeightPosition } = this.state
-        Axis(this.state);
-        let goalSpace = PrintGoal(this.state, leftEdge, leftEdge + axisLength, axisHeightPosition).goalSpace
-        this.branchBuilder();
-        this.setState({
-            goalSpace
-        })
+        console.log("Diagrambuilder")
+        const { leftEdge, axisLength, axisHeightPosition, title, goal, canvasWidth, canvasHeight, canvas } = this.state
+        let cleaner = canvas.getContext('2d');
+
+        if (goal) {
+            Axis(this.state);
+            PrintTitle(this.state)
+            let goalSpace = PrintGoal(this.state, leftEdge, leftEdge + axisLength, axisHeightPosition).goalSpace
+            this.branchBuilder();
+            this.setState({
+                goalSpace
+            })
+        } else {
+            cleaner.clearRect(0, 0, canvasWidth, canvasHeight);
+            if (title) {
+                PrintTitle(this.state)
+            }
+        }
     }
     settingIncomeData(obj) {
         console.log("settingIncomeData")
@@ -205,18 +214,10 @@ export default class BuildDiagram extends Component {
         };
     };
 
-    getData = (obj) => {
-        this.setState({
-            incomeGoal: obj.incomeGoal,
-            incomeTitle: obj.incomeTitle,
-            incomeBranches: obj.incomeBranches,
-            incomePreviousValue: obj.incomePreviousValue
-        })
-    }
     componentDidUpdate(prevProps, prevState) {
-        const { canvas, goal, branches, childFontSize, sorted, isRightDirection, angleRadian, scaleIdx, canvasWidth,
-            previousValue, incomeGoal, incomeTitle, incomeBranches, incomePreviousValue } = this.state
-        console.log("DIDUPDATE >>", this.state.incomeBranches, "--", prevState.incomeBranches, "<<")
+        const { canvas, title, goal, branches, childFontSize, sorted, isRightDirection, angleRadian, scaleIdx, canvasWidth,
+            previousValue } = this.state
+        console.log("DIDUPDATE")
         if (this.props.goal !== prevProps.goal
             || this.props.title !== prevProps.title
             || this.props.branches !== prevProps.branches
@@ -225,27 +226,16 @@ export default class BuildDiagram extends Component {
             console.log("props working")
             this.settingIncomeData(this.props)
         };
-        if (incomeGoal !== prevState.incomeGoal,
-            incomeTitle !== prevState.incomeTitle,
-            incomeBranches !== prevState.incomeBranches,
-            incomePreviousValue !== prevState.incomePreviousValue) {
-            console.log("incomedata working")
-            this.settingIncomeData({
-                "goal": incomeGoal,
-                "title": incomeTitle,
-                "branches": incomeBranches,
-                "previousValue": incomePreviousValue
-            })
-        }
         if (
             isRightDirection != prevState.isRightDirection
             || scaleIdx != prevState.scaleIdx
-
         ) {
             this.preBuilder()
         }
 
         if (canvas !== prevState.canvas
+            || previousValue !== prevState.previousValue
+            || title !== prevState.title
             || goal !== prevState.goal
             || childFontSize !== prevState.childFontSize
             || branches !== prevState.branches
@@ -258,30 +248,23 @@ export default class BuildDiagram extends Component {
     };
 
     componentDidMount() {
-        console.log("componentDidMount")
+        // console.log("componentDidMount")
         this.preBuilder();
     };
     render() {
+        console.log(this.state.goal, "<-state-goal", this.props.goal, "<-props-goal")
         const { canvasWidth, canvasHeight, isRightDirection, branches, sorted, angleRadian } = this.state;
-        console.log("goal-->", this.state.goal)
-        console.log("branches-->", this.state.incomeBranches)
+        const { page } = this.props
+
         let displayDiagram;
-        let buttonsCluster = (<div></div>)
-        if (this.props.page && this.props.page === "manual") {
-            buttonsCluster = (
-                <GetManualData getData={this.getData} />
-            )
-        }
+
         displayDiagram = (
             <canvas className="canvas" id="myCanvas" width={canvasWidth} height={canvasHeight}></canvas>
         );
         return (
-            <div className="build">
-                <div className="build-header">
-                    <div className="build-imported-buttons">
-                        {buttonsCluster}
-                    </div>
-                    <div className="build-buttons">
+            <div className={page === "manual" ? "build vertical-bar" : "build"}>
+                <div className={page === "manual" ? "build-bar-vertical" : "build-bar-horizontal"}>
+                    <div className={page === "manual" ? "build-buttons vertical" : "build-buttons"}>
                         <ArrowButton
                             toggleHandler={this.toggleHandler}
                             isRightDirection={isRightDirection}
@@ -291,14 +274,16 @@ export default class BuildDiagram extends Component {
                             sorted={sorted}
                             arrowButtonStyle={arrowButtonStyle}
                         />
-                        <div className="build-sizing">
+                        <div className={page === "manual" ?
+                            "build-sizing sizing-horizontal" :
+                            "build-sizing"}>
                             <div className="build-sizer">
                                 <DiagramScale
                                     scaleIdx={this.state.scaleIdx}
                                     getScaleIdx={this.getScaleIdx}
                                 />
                             </div>
-                            <div className="build-slider">
+                            <div className="build-font-slider">
                                 <FontSlider
                                     childOptimalFontSize={this.state.childOptimalFontSize}
                                     getFontSize={this.getFontSize}
@@ -310,7 +295,7 @@ export default class BuildDiagram extends Component {
                 <div className="build-display" id="display">
                     <DisplayDiagram diagram={displayDiagram} />
                 </div>
-            </div>
+            </div >
         );
     };
 };
@@ -320,5 +305,5 @@ const arrowButtonStyle = {
     backgroundColor: '#5b6692',
     color: 'whitesmoke',
     border: "none",
-    marginRight: "0.5em",
+    margin: "0.5em",
 };

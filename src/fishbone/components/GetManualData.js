@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import ManualFormField from './ManualFormField';
+import BuildDiagram from './BuildDiagram';
 import '../FishboneStyling.css'
 
 export default class GetManualData extends Component {
@@ -17,7 +18,9 @@ export default class GetManualData extends Component {
         };
         this.keyPress = this.keyPress.bind(this);
     };
-
+    componentDidMount() {
+        this.props.getActive("manual")
+    }
     getBranch = () => {
         this.setState({
             inputFor: "Enter Branch",
@@ -60,7 +63,6 @@ export default class GetManualData extends Component {
             alert("Empty input isn't allowed")
         } else {
             if (name === "Enter Goal") {
-                this.props.getData({ "incomeGoal": currentValue })
                 this.setState({
                     goal: currentValue,
                     currentValue: "",
@@ -84,6 +86,7 @@ export default class GetManualData extends Component {
                         newObj["elements"] = object.elements;
                         return newObj;
                     }),
+                    inputFor: "Enter Element",
                     prevInput: "Enter Element",
                     currentValue: ""
                 })
@@ -91,15 +94,16 @@ export default class GetManualData extends Component {
                 this.setState(state => ({
                     title: currentValue,
                     currentValue: "",
-                    inputFor: state.prevInput ? state.prevInput : "Enter Goal"
+                    inputFor: state.prevInput ? state.prevInput : "Enter Goal",
                 }))
             };
         };
     };
 
     getBack = () => {
-        const { branches, inputFor, goal } = this.state;
+        const { branches, inputFor, goal, title } = this.state;
         let nextGoal = goal;
+        let nextTitle = title;
         let lastBranch, poppedElement, lastBranchElements, lastBranchElementsLength, nextInputFor;
         if (inputFor === "Enter Goal") {
             this.setState({
@@ -141,9 +145,11 @@ export default class GetManualData extends Component {
             } else if (branches.length === 0) {
                 nextGoal = "";
                 nextInputFor = "Enter Goal";
+                nextTitle = ""
             };
             this.setState({
                 goal: nextGoal,
+                title: nextTitle,
                 branches: branches,
                 currentValue: "",
                 branchName: lastBranch,
@@ -152,22 +158,10 @@ export default class GetManualData extends Component {
             });
         };
     };
-    componentDidUpdate(prevProps, prevState) {
-        const { branches, goal, title, previousValue } = this.state;
-        if (goal !== prevState.goal || title !== prevState.title
-            || branches !== prevState.branches || previousValue !== prevState.previousValue
-        ) {
-            this.props.getData({
-                incomeBranches: branches,
-                incomeGoal: goal,
-                incomeTitle: title,
-                incomePreviousValue: previousValue
-            })
-        }
-    }
+
     render() {
-        console.log(this.state.branches)
-        console.log(this.state.previousValue)
+        console.log(this.state.inputFor, "<-----------")
+
         const { title, goal, branches, currentValue, inputFor,
             branchName, previousValue } = this.state;
         let initialButton, formField;
@@ -206,17 +200,27 @@ export default class GetManualData extends Component {
             getComplete={this.getComplete}
             branchName={branchName}
             keyPress={this.keyPress}
-            getData={this.props.getData}
             buttonStyle={buttonStyle}
         />);
 
         return (
-            <div className="manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
-                <div className="manual-create-form-buttons-initial">
-                    {initialButton}
+            <div className="manual-create">
+                <div className="manual-create-form-buttons" onChange={this.handleChange(inputFor)}>
+                    <div className="manual-create-form-buttons-initial">
+                        {initialButton}
+                    </div>
+                    <div className="manual-create-form-buttons-field">
+                        {formField}
+                    </div>
                 </div>
-                <div className="manual-create-form-buttons-field">
-                    {formField}
+                <div className="manual-display">
+                    <BuildDiagram
+                        page="manual"
+                        title={title}
+                        goal={goal}
+                        branches={branches}
+                        previousValue={previousValue}
+                    />
                 </div>
             </div>
         );

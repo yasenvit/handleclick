@@ -94,7 +94,9 @@ var formInputStyle = {
     maxWidth: '300px',
     height: '40px',
     padding: '0px',
-    margin: '0px 10px 20px 10px',
+    margin: '0px 10px 10px 10px',
+    // margin: "0px",
     fontSize: '12px',
+    // backgroundColor: "yellow"
 };
 

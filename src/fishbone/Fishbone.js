@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import GetJsonData from './components/GetJsonData'
-import ManualModule from './components/ManualModule'
+import GetManualData from './components/GetManualData.js'
 import AboutFishbone from './components/AboutFishbone'
 import { Route, Switch } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
@@ -45,7 +45,7 @@ export default class Fishbone extends Component {
         let fishboneRoutes = (
             <Switch>
                 <Route exact path={`${this.props.match.url}`} render={(props) => <AboutFishbone {...props} goToManual={this.goToManual} goToJson={this.goToJson} getActive={this.getActive} />} />
-                <Route exact path={`${this.props.match.url}/manual`} render={(props) => <ManualModule {...props} getActive={this.getActive} />} />
+                <Route exact path={`${this.props.match.url}/manual`} render={(props) => <GetManualData {...props} getActive={this.getActive} />} />
                 <Route exact path={`${this.props.match.url}/json`} render={(props) => <GetJsonData {...props} getActive={this.getActive} />} />
                 <Route>
                     <NoMatch />

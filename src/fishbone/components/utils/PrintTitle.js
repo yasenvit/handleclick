@@ -1,6 +1,7 @@
 
 const PrintTitle = (props) => {
-    const { title, canvas, canvasWidth, isRightDirection, titleFont, titleColor } = props;
+    console.log("Title function")
+    const { title, goal, canvas, canvasWidth, canvasHeight, isRightDirection, titleFont, titleColor } = props;
     let titleText = canvas.getContext('2d');
     titleText.lineWidth = 1.5;
     titleText.font = titleFont;
@@ -10,5 +11,6 @@ const PrintTitle = (props) => {
     let x = isRightDirection ? canvasWidth - 20 : 20;
     titleText.fillText(title, x, 20);
 };
+
 
 export default PrintTitle;
